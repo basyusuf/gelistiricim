@@ -11,7 +11,7 @@ router.get('/', (req, res, next)=> {
       if(!data){
           next({message:"Sisteme kayıtlı hiç bir kullanıcı bulunmaktadır.",status:404});
       }
-    res.json(data);
+    res.status(200).json(data);
   }).catch((err)=>{
     res.json(err);
   });

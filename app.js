@@ -11,6 +11,8 @@ const app = express();
 //DB connection
 const db = require('./helper/db')();
 
+//Middleware
+const verifyToken = require('./middleware/verify-token');
 //config
 const config = require('./config');
 
@@ -23,7 +25,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', indexRouter);
-app.use('/api/users', usersRouter);
+app.use('/api/users',verifyToken, usersRouter);
 
 app.use((err,req,res,next)=>{
     res.locals.message=err.message;

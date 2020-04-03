@@ -24,7 +24,7 @@ router.post('/register', (req, res, next) => {
         });
         const promise = user.save();
         promise.then((data)=>{
-            res.json(data);
+            res.status(201).json(data);
         }).catch((err)=>{
             res.json(err);
         })
