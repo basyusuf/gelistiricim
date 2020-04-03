@@ -11,6 +11,11 @@ const app = express();
 //DB connection
 const db = require('./helper/db')();
 
+//config
+const config = require('./config');
+
+app.set('api_secret_key',config.api_secret_key);
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
