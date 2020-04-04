@@ -4,7 +4,21 @@ const router = express.Router();
 //models
 const User = require('../models/User');
 
-
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     description: List All User
+ *     tags:
+ *       - Users
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: login
+ *     security:
+ *       - ApiKeyAuth: []
+ */
 router.get('/', (req, res, next)=> {
   const promise = User.find({});
   promise.then((data)=>{
@@ -16,6 +30,28 @@ router.get('/', (req, res, next)=> {
     res.json(err);
   });
 });
+
+/**
+ * @swagger
+ * /users/{user_id}:
+ *   get:
+ *     description: Get user for user id
+ *     tags:
+ *       - Users
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: user_id
+ *         description: User ID.
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: get user
+ *     security:
+ *       - ApiKeyAuth: []
+ */
 
 router.get('/:user_id', (req, res, next)=> {
   const userID = req.params.user_id;

@@ -79,6 +79,7 @@ router.post('/register', (req, res, next) => {
  *         in: formData
  *         required: true
  *         type: string
+ *         format: password
  *     responses:
  *       200:
  *         description: login

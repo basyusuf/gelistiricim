@@ -5,6 +5,8 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/userRouter');
+const postRouter = require('./routes/postRouter');
+const commentRouter = require('./routes/commentRouter');
 
 const app = express();
 
@@ -23,13 +25,12 @@ const swaggerDefinition = {
         version: '1.0.0',
         description: 'Endpoints to test the all routes',
     },
-    host: 'localhost:3000',
+    host: 'http://gelistiricim.herokuapp.com',
     basePath: '/api',
     securityDefinitions: {
-        bearerAuth: {
+        ApiKeyAuth: {
             type: 'apiKey',
             name: 'x-access-token',
-            scheme: 'bearer',
             in: 'header',
         },
     },
@@ -53,13 +54,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use('/api', indexRouter);
 app.get('/swagger.json',(req, res)=>{
     res.setHeader('Content-Type', 'application/json');
     res.send(swaggerSpec);
-})
+});
 app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(swaggerSpec));
 app.use('/api/users',verifyToken, usersRouter);
+app.use('/api/post', postRouter);
+app.use('/api/comment', commentRouter);
 
 app.use((err,req,res,next)=>{
     res.locals.message=err.message;
