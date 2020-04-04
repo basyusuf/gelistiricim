@@ -7,7 +7,7 @@ module.exports = () =>{
         }
         );
     mongoose.connection.on('open', () =>{
-        console.log('Operation succesfull.MongoDB: Connected.');
+        // console.log('Operation succesfull.MongoDB: Connected.');
     });
     mongoose.connection.on('error',()=>{
         console.log("Operation failed. Couldn't connect to Mongodb !!!");
