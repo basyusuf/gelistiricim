@@ -7,12 +7,41 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 /* GET home page. */
+
 router.get('/', (req, res, next) => {
   res.json({
     message:"Index Page"
   });
 });
-
+/**
+ * @swagger
+ * /register:
+ *   post:
+ *     description: Register to the application
+ *     tags:
+ *       - Index
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: userName
+ *         description: User's username.
+ *         in: formData
+ *         required: true
+ *         type: string
+ *       - name: password
+ *         description: User's password.
+ *         in: formData
+ *         required: true
+ *         type: string
+ *       - name: email
+ *         description: User's email.
+ *         in: formData
+ *         required: true
+ *         type: string
+ *     responses:
+ *       201:
+ *         description: register
+ */
 router.post('/register', (req, res, next) => {
     const { userName,password,email} =  req.body;
 
@@ -30,7 +59,30 @@ router.post('/register', (req, res, next) => {
         })
     });
 });
-
+/**
+ * @swagger
+ * /login:
+ *   post:
+ *     description: Login to the application
+ *     tags:
+ *       - Index
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: userName
+ *         description: User's username.
+ *         in: formData
+ *         required: true
+ *         type: string
+ *       - name: password
+ *         description: User's password.
+ *         in: formData
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: login
+ */
 router.post('/login',(req,res)=>{
     const {userName,password} = req.body;
     User.findOne({
@@ -39,7 +91,7 @@ router.post('/login',(req,res)=>{
         if(err)
             throw err;
         if(!data){
-            res.json({
+            res.status(401).json({
                 message:"Authentication failed, user not found.",
                 status:false
             })
@@ -47,7 +99,7 @@ router.post('/login',(req,res)=>{
         else{
             bcrypt.compare(password,data.password).then((result)=>{
                if(!result){
-                   res.json({
+                   res.status(403).json({
                        message:"Authentication failed, wrong password or username",
                        status:false
                    })

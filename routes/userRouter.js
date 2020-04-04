@@ -4,7 +4,7 @@ const router = express.Router();
 //models
 const User = require('../models/User');
 
-/* GET users listing. */
+
 router.get('/', (req, res, next)=> {
   const promise = User.find({});
   promise.then((data)=>{
