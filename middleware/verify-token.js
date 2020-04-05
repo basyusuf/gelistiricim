@@ -14,7 +14,7 @@ module.exports=(req,res,next)=>{
                 req.decode = decoded;
                 next();
             }
-        })
+        })//
     }else{
         res.status(200).json({
             message:"No token provided",
