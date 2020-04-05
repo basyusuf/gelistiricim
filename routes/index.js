@@ -121,5 +121,15 @@ router.post('/login',(req,res)=>{
         }
     })
 });
+router.post('/send-verify-email/:user_id',(req,res)=>{
+    const user_id = req.params.user_id;
+    const user = User.findOne(user_id);
+    const eMail = user.email;
+    //Veriyf işlemi olacak.
+});
 
+router.post('/veriyf-email/:email_token',(req,res)=>{
+    const {email_token} = req.params.email_token;
+    //Veriyf işlemi olacak.
+});
 module.exports = router;

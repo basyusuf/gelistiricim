@@ -26,6 +26,11 @@ const UserSchema = new Schema({
         type: String,
         required: false
     },
+    emailConfirmStatus:{
+        type:Boolean,
+        required:true,
+        default: false
+    },
     status:{ //User ban olup olmama durumu
         type:Boolean,
         required:true,
