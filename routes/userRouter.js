@@ -102,4 +102,45 @@ router.post('/', (req, res, next)=> {
     });
 });
 
+/**
+ * @swagger
+ * /users/{user_id}:
+ *   delete:
+ *     description: Ban user for user id
+ *     tags:
+ *       - Users
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: user_id
+ *         description: User ID.
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: get user
+ *     security:
+ *       - ApiKeyAuth: []
+ */
+router.delete('/:user_id', (req, res, next)=> {
+    const userID = req.params.user_id;
+    const promise = User.findByIdAndUpdate(
+        userID,
+        {
+            status:false
+        },
+        {
+            new:true
+        });
+    promise.then((data)=>{
+        res.status(200).json({
+            user_id:userID,
+            status:false,
+            message:"User banned"
+        });
+    }).catch((err)=>{
+        res.json(err);
+    });
+});
 module.exports = router;
