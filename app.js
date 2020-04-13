@@ -4,9 +4,9 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/userRouter');
+/*const usersRouter = require('./routes/userRouter');
 const postRouter = require('./routes/postRouter');
-const commentRouter = require('./routes/commentRouter');
+const commentRouter = require('./routes/commentRouter');*/
 
 const app = express();
 
@@ -15,6 +15,7 @@ const db = require('./helper/db')();
 
 //Middleware
 const verifyToken = require('./middleware/verify-token');
+const customErrorHandler = require('./middleware/customErrorHandler');
 //config
 const config = require('./config');
 
@@ -25,7 +26,7 @@ const swaggerDefinition = {
         version: '1.0.0',
         description: 'Endpoints to test the all routes',
     },
-    host: 'gelistiricim.herokuapp.com',
+    host: 'localhost:3000',
     basePath: '/api',
     securityDefinitions: {
         ApiKeyAuth: {
@@ -61,22 +62,8 @@ app.get('/swagger.json',(req, res)=>{
     res.send(swaggerSpec);
 });
 app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(swaggerSpec));
-app.use('/api/users',verifyToken, usersRouter);
-app.use('/api/post', postRouter);
-app.use('/api/comment', commentRouter);
 
-app.use((err,req,res,next)=>{
-    res.locals.message=err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-    res.status(err.status || 500);
-    res.json(
-        {
-           error:{
-               message:err.message,
-               status:err.status
-           }
-        });
-});
+app.use(customErrorHandler);
 
 module.exports = app;

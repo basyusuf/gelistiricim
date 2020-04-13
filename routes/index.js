@@ -6,6 +6,14 @@ const jwt = require('jsonwebtoken');
 //Models
 const User = require('../models/User');
 
+//Routes
+const postRouter = require('./postRouter');
+const usersRouter = require('./userRouter');
+const commentRouter = require('./commentRouter');
+
+router.use('/users', usersRouter);
+router.use('/post', postRouter);
+router.use('/comment', commentRouter);
 /* GET home page. */
 
 router.get('/', (req, res, next) => {
@@ -55,7 +63,7 @@ router.post('/register', (req, res, next) => {
         promise.then((data)=>{
             res.status(201).json(data);
         }).catch((err)=>{
-            res.json(err);
+            next(err);
         })
     });
 });
