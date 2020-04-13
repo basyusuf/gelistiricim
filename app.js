@@ -26,7 +26,7 @@ const swaggerDefinition = {
         version: '1.0.0',
         description: 'Endpoints to test the all routes',
     },
-    host: 'gelistiricim.herokuapp.com/',
+    host: 'gelistiricim.herokuapp.com',
     basePath: '/api',
     securityDefinitions: {
         ApiKeyAuth: {

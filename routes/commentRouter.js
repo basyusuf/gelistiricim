@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const {getCommentsForPostID} = require('../controller/commentController');
 //models
 const Comment = require('../models/Comment');
 /**
@@ -24,19 +24,7 @@ const Comment = require('../models/Comment');
  *     security:
  *       - ApiKeyAuth: []
  */
-router.get('/:post_id', (req, res, next)=> {
-    const postID = req.params.post_id;
-    const promise = Comment.find({
-        post:postID,
-        status:true
-    });
-    promise.then((data)=>{
-        res.status(200).json(data);
-    }).catch((err)=>{
-        res.json(err);
-    });
-});
-
+router.get('/:post_id',getCommentsForPostID);
 /**
  * @swagger
  * /comment/{post_id}:
