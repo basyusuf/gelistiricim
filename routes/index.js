@@ -113,12 +113,7 @@ router.post('/login',(req,res)=>{
                    })
                }
                else{
-                   const payload ={
-                       userName:userName
-                   };
-                   const token = jwt.sign(payload, req.app.get('api_secret_key'),{
-                       expiresIn: 720 //12 Saat
-                   });
+                   const token = data.generateJwtFromUser();
                    res.json({
                        status:true,
                        token:token

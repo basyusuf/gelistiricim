@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcryptjs');
-
+const jwt = require('jsonwebtoken');
 const UserSchema = new Schema({
     userName:{
         type:String,
@@ -63,6 +63,20 @@ const UserSchema = new Schema({
         default:true
     }
 });
+
+UserSchema.methods.generateJwtFromUser = function(){
+    const {api_secret_key} = require('../config');
+
+    const payload = {
+        id:this._id,
+        userName:this.userName
+    };
+    const token = jwt.sign(payload,api_secret_key,{
+        expiresIn:"1h"
+    });
+
+    return token;
+}
 
 UserSchema.pre('save',function(next){
     //Parola değişmediyse
