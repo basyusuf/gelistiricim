@@ -11,5 +11,5 @@ const customErrorHandler = (err,req,res,next)=>{
         success:false,
         message:customError.message || "Internal server error."
     })
-}
+};
 module.exports = customErrorHandler;
