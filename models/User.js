@@ -18,7 +18,7 @@ const UserSchema = new Schema({
     password:{
         type:String,
         required:true,
-        mingLength:[6,"En az uzunluk `{VALUE}` olmalıdır"],
+        minLength:[6,"En az uzunluk `{VALUE}` olmalıdır"],
         select:false
     },
     email:{
