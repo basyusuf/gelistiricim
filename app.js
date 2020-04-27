@@ -4,9 +4,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
-/*const usersRouter = require('./routes/userRouter');
-const postRouter = require('./routes/postRouter');
-const commentRouter = require('./routes/commentRouter');*/
+//All route in indexRouter
 
 const app = express();
 
@@ -27,7 +25,7 @@ const swaggerDefinition = {
         description: 'Endpoints to test the all routes',
     },
     //On server host:gelistiricim.herokuapp.com OR local: localhost:3000
-    host: 'localhost:3000',
+    host: 'gelistiricim.herokuapp.com',
     basePath: '/api',
     securityDefinitions: {
         ApiKeyAuth: {
