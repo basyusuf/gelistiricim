@@ -26,7 +26,8 @@ const swaggerDefinition = {
         version: '1.0.0',
         description: 'Endpoints to test the all routes',
     },
-    host: 'gelistiricim.herokuapp.com',
+    //On server host:gelistiricim.herokuapp.com OR local: localhost:3000
+    host: 'localhost:3000',
     basePath: '/api',
     securityDefinitions: {
         ApiKeyAuth: {
@@ -38,7 +39,7 @@ const swaggerDefinition = {
 };
 const swaggerOptions = {
     swaggerDefinition,
-    apis: ['./routes/*.js'],
+    apis: ['./controller/*.js'],
 };
 const swaggerUI = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');

@@ -1,5 +1,25 @@
 const Comment = require('../models/Comment');
-
+/**
+ * @swagger
+ * /comment/{post_id}:
+ *   get:
+ *     description: Get comment for post id
+ *     tags:
+ *       - Comment
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: post_id
+ *         description: Post ID.
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Get comment
+ *     security:
+ *       - ApiKeyAuth: []
+ */
 const getCommentsForPostID = (req, res, next)=> {
     const postID = req.params.post_id;
     const promise = Comment.find({
@@ -12,6 +32,37 @@ const getCommentsForPostID = (req, res, next)=> {
         res.json(err);
     });
 }
+/**
+ * @swagger
+ * /comment/{post_id}:
+ *   post:
+ *     description: Get comment for post id
+ *     tags:
+ *       - Comment
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: post_id
+ *         description: Post ID.
+ *         in: path
+ *         required: true
+ *         type: string
+ *       - name: author
+ *         description: user ID.
+ *         in: formData
+ *         required: true
+ *         type: string
+ *       - name: message
+ *         description: Comment Message.
+ *         in: formData
+ *         required: true
+ *         type: string
+ *     responses:
+ *       201:
+ *         description: Created Comment.
+ *     security:
+ *       - ApiKeyAuth: []
+ */
 const createCommentForPostID = (req, res, next)=> {
     const postID = req.params.post_id;
     const { author,message} = req.body;
@@ -27,6 +78,32 @@ const createCommentForPostID = (req, res, next)=> {
         res.json(err);
     });
 }
+/**
+ * @swagger
+ * /comment/{comment_id}:
+ *   put:
+ *     description: Update comment
+ *     tags:
+ *       - Comment
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: comment_id
+ *         description: Comment ID.
+ *         in: path
+ *         required: true
+ *         type: string
+ *       - name: message
+ *         description: Message.
+ *         in: formData
+ *         required: true
+ *         type: string
+ *     responses:
+ *       204:
+ *         description: Updated Comment.
+ *     security:
+ *       - ApiKeyAuth: []
+ */
 const updateCommentForID = (req, res, next)=> {
     const commentID = req.params.comment_id;
     const promise = Comment.findByIdAndUpdate(commentID,
@@ -42,7 +119,27 @@ const updateCommentForID = (req, res, next)=> {
         res.json(err);
     });
 }
-
+/**
+ * @swagger
+ * /comment/{comment_id}:
+ *   delete:
+ *     description: Soft delete comment
+ *     tags:
+ *       - Comment
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: comment_id
+ *         description: Comment ID.
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Deleted Comment.
+ *     security:
+ *       - ApiKeyAuth: []
+ */
 const deleteCommentForID = (req, res, next)=> {
     const commentID = req.params.comment_id;
     const promise = Comment.findByIdAndUpdate(commentID,

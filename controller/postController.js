@@ -1,4 +1,19 @@
 const Post = require('../models/Post');
+/**
+ * @swagger
+ * /post:
+ *   get:
+ *     description: Get all post
+ *     tags:
+ *       - Post
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: get user
+ *     security:
+ *       - ApiKeyAuth: []
+ */
 const getAllPosts = (req, res, next) =>{
     const promise = Post.find({status:true});
     promise.then((data)=>{
@@ -10,7 +25,37 @@ const getAllPosts = (req, res, next) =>{
         res.json(err);
     });
 };
-
+/**
+ * @swagger
+ * /post:
+ *   post:
+ *     description: Get user for user id
+ *     tags:
+ *       - Post
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: author
+ *         description: User ID.
+ *         in: formData
+ *         required: true
+ *         type: string
+ *       - name: title
+ *         description: Post title.
+ *         in: formData
+ *         required: true
+ *         type: string
+ *       - name: message
+ *         description: Post message.
+ *         in: formData
+ *         required: true
+ *         type: string
+ *     responses:
+ *       201:
+ *         description: Created Post
+ *     security:
+ *       - ApiKeyAuth: []
+ */
 const createNewPost = (req, res, next)=> {
     const { author,title,message} = req.body;
     const post = new Post({
@@ -26,7 +71,27 @@ const createNewPost = (req, res, next)=> {
         res.json(err);
     });
 };
-
+/**
+ * @swagger
+ * /post/{post_id}:
+ *   get:
+ *     description: Get user for user id
+ *     tags:
+ *       - Post
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: post_id
+ *         description: Post ID.
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Get Post
+ *     security:
+ *       - ApiKeyAuth: []
+ */
 const getPostForId = (req, res, next)=> {
     const postID = req.params.post_id;
     const promise = Post.findById(postID);

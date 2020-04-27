@@ -1,5 +1,19 @@
 const User = require('../models/User');
-
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     description: List All User
+ *     tags:
+ *       - Users
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: login
+ *     security:
+ *       - ApiKeyAuth: []
+ */
 const getAllUser = (req, res, next)=> {
     const promise = User.find({});
     promise.then((data)=>{
@@ -11,6 +25,28 @@ const getAllUser = (req, res, next)=> {
         res.json(err);
     });
 }
+
+/**
+ * @swagger
+ * /users/{user_id}:
+ *   get:
+ *     description: Get user for user id
+ *     tags:
+ *       - Users
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: user_id
+ *         description: User ID.
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: get user
+ *     security:
+ *       - ApiKeyAuth: []
+ */
 const getUserForID = (req, res, next)=> {
     const userID = req.params.user_id;
     const promise = User.findById(userID);
@@ -58,7 +94,27 @@ const createUser = (req, res, next)=> {
         res.json(err);
     });
 }
-
+/**
+ * @swagger
+ * /users/{user_id}:
+ *   delete:
+ *     description: Ban user for user id
+ *     tags:
+ *       - Users
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: user_id
+ *         description: User ID.
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: get user
+ *     security:
+ *       - ApiKeyAuth: []
+ */
 const deleteUser = (req, res, next)=> {
     const userID = req.params.user_id;
     const promise = User.findByIdAndUpdate(
