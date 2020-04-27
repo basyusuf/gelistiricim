@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {registerUser} = require('../controller/indexController');
+const {registerUser,logoutUser,loginUser,welcomeAPI} = require('../controller/indexController');
 //Child Routes
 const postRouter = require('./postRouter');
 const usersRouter = require('./userRouter');
@@ -12,6 +12,7 @@ const User = require('../models/User');
 router.get('/', welcomeAPI);
 router.post('/register',registerUser );
 router.post('/login',loginUser);
+router.get('/logout',logoutUser);
 
 
 //ChildRoutes

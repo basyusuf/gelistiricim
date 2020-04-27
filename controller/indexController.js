@@ -1,7 +1,11 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-welcomeAPI =(req, res, next) => {
+const CustomError = require('../helper/error/CustomError');
+const { validateUserInput,comparePassword} = require('../helper/input/inputHelpers');
+
+
+const welcomeAPI =(req, res, next) => {
     res.json({
         message:"Welcome Gelistiricim API V1"
     });
@@ -35,7 +39,7 @@ welcomeAPI =(req, res, next) => {
  *       201:
  *         description: register
  */
-registerUser = (req, res, next) => {
+const registerUser = (req, res, next) => {
     const { userName,password,email} =  req.body;
 
     const user = new User({
@@ -76,26 +80,23 @@ registerUser = (req, res, next) => {
  *       200:
  *         description: login
  */
-loginUser = (req,res)=>{
+const loginUser = async (req,res,next)=>{
     const {userName,password} = req.body;
-    User.findOne({
+
+    if(!validateUserInput(userName,password)){
+        return next(new CustomError("Please check your inputs",400));
+    }
+    await User.findOne({
         userName:userName
     },(err,data)=>{
         if(err)
-            throw err;
+            return next(new CustomError("Server error",500));
         if(!data){
-            res.status(401).json({
-                message:"Authentication failed, user not found.",
-                status:false
-            })
+            return next(new CustomError("Authentication failed, user not found.",401));
         }
         else{
-            bcrypt.compare(password,data.password,(result)=>{
-                if(!result){
-                    res.status(403).json({
-                        message:"Authentication failed, wrong password or username",
-                        status:false
-                    })
+                if(!comparePassword(password,data.password)){
+                    return next(new CustomError("Authentication failed, wrong password or username",401));
                 }
                 else{
                     const token = data.generateJwtFromUser();
@@ -104,13 +105,23 @@ loginUser = (req,res)=>{
                         token:token
                     })
                 }
-            });
         }
-    })
+    }).select('+password')
+}
+const logoutUser = async (req,res,next) =>{
+    return res.status(200)
+        .cookie({
+            httpOnly:true,
+            expires:new Date(Date.now())
+        }).json({
+            status:true,
+            message:"Logout Successfull"
+        })
 }
 
 module.exports={
     registerUser,
     loginUser,
-    welcomeAPI
+    welcomeAPI,
+    logoutUser
 }
