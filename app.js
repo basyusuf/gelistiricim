@@ -24,7 +24,7 @@ const swaggerDefinition = {
         description: 'Endpoints to test the all routes',
     },
     //On server host:gelistiricim.herokuapp.com OR local: localhost:3000
-    host: 'localhost:3000',
+    host: config.host,
     basePath: '/api',
     securityDefinitions: {
         ApiKeyAuth: {

@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const CustomError = require('../helper/error/CustomError');
 /**
  * @swagger
  * /users:
@@ -18,7 +19,7 @@ const getAllUser = (req, res, next)=> {
     const promise = User.find({});
     promise.then((data)=>{
         if(!data){
-            next({message:"Sisteme kayıtlı hiç bir kullanıcı bulunmaktadır.",status:404});
+            next(new CustomError("System havent user",400));
         }
         res.status(200).json(data);
     }).catch((err)=>{
@@ -52,7 +53,7 @@ const getUserForID = (req, res, next)=> {
     const promise = User.findById(userID);
     promise.then((data)=>{
         if(!data){
-            next({message:"User not found!",status:404});
+            next(new CustomError("User not found",404));
         }
         else{
             res.json(data);
