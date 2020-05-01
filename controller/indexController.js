@@ -117,7 +117,8 @@ const logoutUser = async (req,res,next) =>{
             status:true,
             message:"Logout Successfull"
         })
-}
+};
+
 
 module.exports={
     registerUser,

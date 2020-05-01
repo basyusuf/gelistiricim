@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const {registerUser,logoutUser,loginUser,welcomeAPI} = require('../controller/indexController');
+//Middleware
+const verifyToken = require('../middleware/verify-token');
+const profileImageUpload = require('../middleware/libraries/profileImageUpload');
 //Child Routes
 const postRouter = require('./postRouter');
 const usersRouter = require('./userRouter');
@@ -13,7 +16,6 @@ router.get('/', welcomeAPI);
 router.post('/register',registerUser );
 router.post('/login',loginUser);
 router.get('/logout',logoutUser);
-
 
 //ChildRoutes
 router.use('/users', usersRouter);

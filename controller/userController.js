@@ -135,11 +135,26 @@ const deleteUser = (req, res, next)=> {
         res.json(err);
     });
 }
+const uploadImage = async (req,res,next)=>{
+    const user = await User.findByIdAndUpdate(req.user.id,{
+        "images":req.savedProfileImage
+    },{
+        new:true,
+        runValidators:true
+    });
+
+    res.status(200).json({
+        success:true,
+        message:"Image upload succesfull",
+        data:user
+    });
+}
 
 module.exports={
     getAllUser,
     getUserForID,
     updateUserForID,
     createUser,
-    deleteUser
+    deleteUser,
+    uploadImage
 }
