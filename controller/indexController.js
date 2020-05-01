@@ -118,11 +118,25 @@ const logoutUser = async (req,res,next) =>{
             message:"Logout Successfull"
         })
 };
+const forgotPassword = async (req,res,next)=>{
+    const resetEmail = req.body.email;
+    const user =await User.findOne({email:resetEmail});
+    if(!user){
+        return next(new CustomError("There is no user with that email",400));
+    }
+    const resetPasswordToken = user.getResetPasswordTokenFromUser();
+    await user.save();
+    res.json({
+        success:true,
+        message:"Token Sent To Your Email"
+    })
+}
 
 
 module.exports={
     registerUser,
     loginUser,
     welcomeAPI,
-    logoutUser
+    logoutUser,
+    forgotPassword
 }
