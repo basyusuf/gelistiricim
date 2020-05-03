@@ -84,7 +84,6 @@ const registerUser = (req, res, next) => {
  */
 const loginUser = async (req,res,next)=>{
     const {userName,password} = req.body;
-
     if(!validateUserInput(userName,password)){
         return next(new CustomError("Please check your inputs",400));
     }
@@ -97,6 +96,9 @@ const loginUser = async (req,res,next)=>{
             return next(new CustomError("Authentication failed, user not found.",401));
         }
         else{
+                if(data.status === false){
+                    return next(new CustomError("User Banned.",400));
+                }
                 if(!comparePassword(password,data.password)){
                     return next(new CustomError("Authentication failed, wrong password or username",401));
                 }

@@ -15,16 +15,16 @@ const CustomError = require('../helper/error/CustomError');
  *     security:
  *       - ApiKeyAuth: []
  */
-const getAllUser = (req, res, next)=> {
-    const promise = User.find({});
-    promise.then((data)=>{
-        if(!data){
+const getAllUser = async (req, res, next)=> {
+    const user = await User.find();
+        if(!user){
             next(new CustomError("System havent user",400));
         }
-        res.status(200).json(data);
-    }).catch((err)=>{
-        res.json(err);
-    });
+        res.status(200).json(
+            {
+                users:user
+            }
+        );
 }
 
 /**
@@ -97,7 +97,7 @@ const createUser = (req, res, next)=> {
 }
 /**
  * @swagger
- * /users/{user_id}:
+ * /users/ban/{user_id}:
  *   delete:
  *     description: Ban user for user id
  *     tags:
@@ -116,7 +116,7 @@ const createUser = (req, res, next)=> {
  *     security:
  *       - ApiKeyAuth: []
  */
-const deleteUser = (req, res, next)=> {
+const banUser = (req, res, next)=> {
     const userID = req.params.user_id;
     const promise = User.findByIdAndUpdate(
         userID,
@@ -150,12 +150,23 @@ const uploadImage = async (req,res,next)=>{
         data:user
     });
 }
+const deleteUser = async (req,res,next)=>{
+    const {id} = req.params;
+    const user = await User.findById(id);
 
+    await user.remove();
+    return res.status(200)
+        .json({
+            success:true,
+            message:"Delete operation successfull"
+        });
+}
 module.exports={
     getAllUser,
     getUserForID,
     updateUserForID,
     createUser,
+    banUser,
     deleteUser,
     uploadImage
 }

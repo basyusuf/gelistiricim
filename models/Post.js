@@ -3,10 +3,9 @@ const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
     author:{
-        type:String,
+        type:mongoose.Schema.ObjectId,
         required:true,
-        minLength:[12,'`{PATH}` alanı en kısa `{VALUE}` karakter olmalıdır.'],
-        maxLength:[12,'`{PATH}` alanı en uzun `{VALUE}` karakter olmalıdır.']
+        ref:"User"
     },
     title:{
         type:String,
@@ -51,6 +50,7 @@ PostSchema.pre('save',function(next) {
     this.slug = slugify(this.title);
     next();
 });
+
 slugify = (text) => {
     var trMap = {
         'çÇ':'c',

@@ -1,12 +1,12 @@
 module.exports={
     api_secret_key:'gelistiricimSECRETKEY2020!',
     //gelistiricim.herokuapp.com ve ya localhost:3000
-    host:"gelistiricim.herokuapp.com",
+    host:"localhost:3000",
     smtpSetting:{
         host:"smtp.gmail.com",
         port:587,
         email:"y.penava@gmail.com",
-        pass:"buraya bakan harbi sinsidir"
+        pass:"44304430y"
     }
 
 }

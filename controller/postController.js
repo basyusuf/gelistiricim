@@ -57,16 +57,18 @@ const getAllPosts = (req, res, next) =>{
  *       - ApiKeyAuth: []
  */
 const createNewPost = (req, res, next)=> {
-    const { author,title,message} = req.body;
+    const { title,message} = req.body;
     const post = new Post({
-        author:author,
+        author:req.user.id,
         title:title,
         message:message
     });
     const promise = post.save();
     promise.then((data)=>{
-
-        res.status(201).json(data);
+        res.status(201).json({
+            success:true,
+            data:data
+        });
     }).catch((err)=>{
         res.json(err);
     });

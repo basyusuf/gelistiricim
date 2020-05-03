@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const Post = require('./Post');
 
 const UserSchema = new Schema({
     userName:{
@@ -110,5 +111,11 @@ UserSchema.pre('save',function(next){
             next();
         });
     });
+});
+UserSchema.post("remove",async function () {
+    //Kullanıcı silindiğinde ona ait bütün Gönderiler Silinecek.
+    await Post.deleteMany({
+        user:this._id
+    })
 });
 module.exports = mongoose.model('user',UserSchema);
