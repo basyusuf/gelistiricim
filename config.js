@@ -6,7 +6,7 @@ module.exports={
         host:"smtp.gmail.com",
         port:587,
         email:"y.penava@gmail.com",
-        pass:"44304430y"
+        pass:""
     }
 
 }

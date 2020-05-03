@@ -1,4 +1,5 @@
 const Post = require('../models/Post');
+const CustomError = require('../helper/error/CustomError');
 /**
  * @swagger
  * /post:
@@ -123,9 +124,39 @@ const updatePostForId = (req, res, next)=> {
         res.json(err);
     });
 }
+const likePost = async (req,res,next)=>{
+    const postID = req.params.post_id;
+    console.log("User Id:"+req.user.id);
+    const post =await Post.findById(postID);
+    if(post.likes.includes(req.user.id)){
+        return next(new CustomError("You already liked this post",400));
+    }
+    post.likes.push(req.user.id);
+    await post.save();
+    return res.status(200).json({
+        success:true,
+        data:post
+    })
+}
+const unlikePost = async (req,res,next)=>{
+    const postID = req.params.post_id;
+    const post =await Post.findById(postID);
+    if(!post.likes.includes(req.user.id)){
+        return next(new CustomError("You can not unlike the this post",400));
+    }
+    const index = post.likes.indexOf(req.user.id);
+    post.likes.splice(index,1);
+    await post.save();
+    return res.status(200).json({
+        success:true,
+        data:post
+    })
+}
 module.exports={
     getAllPosts,
     createNewPost,
     getPostForId,
-    updatePostForId
+    updatePostForId,
+    likePost,
+    unlikePost
 };
