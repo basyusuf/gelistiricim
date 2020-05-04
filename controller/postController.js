@@ -16,12 +16,18 @@ const CustomError = require('../helper/error/CustomError');
  *       - ApiKeyAuth: []
  */
 const getAllPosts = (req, res, next) =>{
-    const promise = Post.find({status:true});
+    const promise = Post.find({status:true}).populate("author","userName");
     promise.then((data)=>{
         if(!data || data==null){
             next({message:"Sisteme kayıtlı hiç bir makale bulunmaktadır.",status:404});
         }
-        res.status(200).json(data);
+        res.status(200).json(
+            {
+                data:data,
+                status:true,
+                count:data.length
+            }
+        );
     }).catch((err)=>{
         res.json(err);
     });
@@ -97,7 +103,7 @@ const createNewPost = (req, res, next)=> {
  */
 const getPostForId = (req, res, next)=> {
     const postID = req.params.post_id;
-    const promise = Post.findById(postID);
+    const promise = Post.findById(postID).populate("likes","userName");
     promise.then((data)=>{
         if(!data){
             next({message:"Post not found!",status:404});

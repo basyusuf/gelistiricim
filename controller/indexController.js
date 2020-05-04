@@ -2,7 +2,7 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
-const CustomError = require('../middleware/customErrorHandler');
+const CustomError = require('../helper/error/CustomError');
 const { validateUserInput,comparePassword} = require('../helper/input/inputHelpers');
 const sendEmail = require('../helper/libraries/sendEmail');
 

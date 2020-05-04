@@ -1,0 +1,37 @@
+[
+  {
+    "_id": "5e30275d141401679e3832a1",
+    "role": "admin",
+    "userName": "Admin",
+    "email": "admin@admin.com",
+    "password": "123456"
+  },
+  {
+    "_id": "5e2866280427c1ff0dd2b5cb",
+    "role": "user",
+    "userName": "yusufbas",
+    "email": "y.penava@hotmail.com",
+    "password": "123456"
+  },
+  {
+    "_id": "5e300f0ffbb6b05ee9037fd2",
+    "role": "user",
+    "userName": "kadirgokgoz",
+    "email": "kdrgkgz1998@gmail.com",
+    "password": "123456"
+  },
+  {
+    "_id": "5e2effcccbdf585842cdb6ce",
+    "role": "user",
+    "userName": "carlohasan",
+    "email": "carlohasan12121212@gmail.com",
+    "password": "123456"
+  },
+  {
+    "_id": "5e302931752a052e11096e96",
+    "role": "user",
+    "userName": "yardali",
+    "email": "yardali12121212@gmail.com",
+    "password": "123456"
+  }
+]

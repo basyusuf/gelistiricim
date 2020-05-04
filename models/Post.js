@@ -5,7 +5,7 @@ const PostSchema = new Schema({
     author:{
         type:String,//mongoose.Schema.ObjectId
         required:true,
-        ref:"User"
+        ref:"user"
     },
     title:{
         type:String,
@@ -14,7 +14,7 @@ const PostSchema = new Schema({
         minLength:[6,'`{PATH}` alanı en kısa `{VALUE}` karakter olmalıdır.'],
         maxLength: [120,'`{PATH}` alanı en kısa `{VALUE}` karakter olmalıdır.']
     },
-    message:{
+    content:{
         type:String,
         required:true,
         mingLength:[24,'`{PATH}` alanı en kısa `{VALUE}` karakter olmalıdır.'],
@@ -31,7 +31,7 @@ const PostSchema = new Schema({
     likes:[
         {
             type:mongoose.Schema.ObjectId,
-            ref:"User"
+            ref:"user"
         }
     ],
     views:{
