@@ -34,10 +34,18 @@ const PostSchema = new Schema({
             ref:"user"
         }
     ],
+    likeCount:{
+        type:Number,
+        default:0
+    },
     views:{
         type:Number,
         required:true,
         default:0
+    },
+    createdAt:{
+        type:Date,
+        default:Date.now
     },
     status:{ //Post silinip silinmeme durumu
         type:Boolean,

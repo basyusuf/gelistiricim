@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const verifyToken = require('../middleware/verify-token');
 const PostOwnerAccess = require('../middleware/PostOwnerAccess');
+const Post = require('../models/Post');
+const postQueryMiddleware = require('../middleware/query/postQueryMiddleware');
 const { getAllPosts,
     createNewPost,
     getPostForId,
@@ -10,7 +12,12 @@ const { getAllPosts,
     unlikePost
     } = require('../controller/postController');
 
-router.get('/', getAllPosts);
+router.get('/',postQueryMiddleware(Post,{
+    population:{
+        path:"author",
+        select:"userName"
+    }
+}) ,getAllPosts);
 router.post('/', createNewPost);
 router.get('/:post_id', getPostForId);
 router.put('/:post_id',[verifyToken,PostOwnerAccess],updatePostForId);

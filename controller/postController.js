@@ -15,22 +15,8 @@ const CustomError = require('../helper/error/CustomError');
  *     security:
  *       - ApiKeyAuth: []
  */
-const getAllPosts = (req, res, next) =>{
-    const promise = Post.find({status:true}).populate("author","userName");
-    promise.then((data)=>{
-        if(!data || data==null){
-            next({message:"Sisteme kayıtlı hiç bir makale bulunmaktadır.",status:404});
-        }
-        res.status(200).json(
-            {
-                data:data,
-                status:true,
-                count:data.length
-            }
-        );
-    }).catch((err)=>{
-        res.json(err);
-    });
+const getAllPosts = async (req, res, next) =>{
+        return res.status(200).json(res.queryResults);
 };
 /**
  * @swagger
@@ -138,6 +124,7 @@ const likePost = async (req,res,next)=>{
         return next(new CustomError("You already liked this post",400));
     }
     post.likes.push(req.user.id);
+    post.likeCount = post.likes.length;
     await post.save();
     return res.status(200).json({
         success:true,
@@ -152,6 +139,7 @@ const unlikePost = async (req,res,next)=>{
     }
     const index = post.likes.indexOf(req.user.id);
     post.likes.splice(index,1);
+    post.likeCount = post.likes.length;
     await post.save();
     return res.status(200).json({
         success:true,
