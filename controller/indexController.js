@@ -5,7 +5,7 @@ const config = require('../config');
 const CustomError = require('../helper/error/CustomError');
 const { validateUserInput,comparePassword} = require('../helper/input/inputHelpers');
 const sendEmail = require('../helper/libraries/sendEmail');
-
+const {forgotPasswordTemplate} = require('../template/EmailTemplate/ForgotPasswordTemplate');
 
 const welcomeAPI =(req, res, next) => {
     res.json({
@@ -132,15 +132,12 @@ const forgotPassword = async (req,res,next)=>{
     await user.save();
 
     const resetPasswordUrl = `http://${config.host}/api/resetpassword?resetPasswordToken=${resetPasswordToken}`;
-    const emailTemplate = `
-    <h3>Reset Your Password</h3>
-    <p>This <a href='${resetPasswordUrl}' target="_blank">Link</a> will expire in 1 hour</p>
-    `;
+    const emailTemplate = forgotPasswordTemplate(resetPasswordUrl,user.userName);
     try{
         await sendEmail({
             from:"y.penava@gmail.com",
             to : resetEmail,
-            subject:"Reset your password",
+            subject:"Gelistiricim - Şifre Yenileme Talebi",
             html:emailTemplate
         });
         return res.status(200).json({
