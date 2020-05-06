@@ -13,7 +13,7 @@ describe('/api/users Tests',()=>{
             .post('/api/login')
             .send({
                 userName:'test',
-                password:'test123'
+                password:'123456'
             })
             .end((err,res)=>{
                 token = res.body.token;
