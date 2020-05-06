@@ -1,0 +1,24 @@
+[
+  {
+    "_id" : "5eb2da2b3f463ebfba4efc28",
+    "text": "Test sorusunun cevabı aşağıdakilerden hangisidir?",
+    "value": 1,
+    "category": "5eb2d2b1a9690ea1faf98e06",
+    "multiCorrect": false,
+    "subjects": [
+      "5eb2d525f2afe90c9d05dd8b",
+      "5eb2d52ab40a2205de6f91d3"
+    ],
+    "level": "5eb2d6ae77980e944a2ea84b",
+    "answers": [
+      "5eb2d6ae77980e944a2ea84b",
+      "5eb2d6b2c144a3f20b39b72b",
+      "5eb2d6b6931d9f89a1c218f5",
+      "5eb2d6baf6f2199a1671d36c",
+      "5eb2d6bfcf5a768ad20d0d01"
+    ],
+    "correctAnswer": [
+      "5eb2d6b6931d9f89a1c218f5"
+    ]
+  }
+]

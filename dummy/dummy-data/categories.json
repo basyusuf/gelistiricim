@@ -1,0 +1,27 @@
+[
+  {
+    "_id" : "5eb2d2b1a9690ea1faf98e06",
+    "name" : "front-end",
+    "value": 1
+  },
+  {
+    "_id" : "5eb2d2b9f03aef144b948e24",
+    "name" : "back-end",
+    "value": 2
+  },
+  {
+    "_id" : "5eb2d2bf9358c28e1c7eff8e",
+    "name" : "full-stack",
+    "value": 3
+  },
+  {
+    "_id" : "5eb2d2c6b71b312e040bafcf",
+    "name" : "mobile",
+    "value": 4
+  },
+  {
+    "_id" : "5eb2d2cdadbf13c0299feabb",
+    "name" : "devops",
+    "value": 5
+  }
+]

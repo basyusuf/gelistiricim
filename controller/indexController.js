@@ -131,7 +131,7 @@ const forgotPassword = async (req,res,next)=>{
     const resetPasswordToken = user.getResetPasswordTokenFromUser();
     await user.save();
 
-    const resetPasswordUrl = `http://${config.host}/api/resetpassword?resetPasswordToken=${resetPasswordToken}`;
+    const resetPasswordUrl = `http://${config.domain}/api/resetpassword?resetPasswordToken=${resetPasswordToken}`;
     const emailTemplate = forgotPasswordTemplate(resetPasswordUrl,user.userName);
     try{
         await sendEmail({

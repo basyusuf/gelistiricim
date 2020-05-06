@@ -55,7 +55,6 @@ const PostSchema = new Schema({
 });
 
 PostSchema.pre('save',function(next) {
-    console.log(this.title);
     this.slug = slugify(this.title);
     next();
 });

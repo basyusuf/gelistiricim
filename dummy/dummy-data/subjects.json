@@ -1,0 +1,26 @@
+[
+  {
+    "_id" : "5eb2d525f2afe90c9d05dd8b",
+    "name" : "JavaScript",
+    "value": 1,
+    "description": "JavaScript, yaygın olarak web tarayıcılarında kullanılmakta olan dinamik bir programlama dilidir."
+  },
+  {
+    "_id" : "5eb2d52ab40a2205de6f91d3",
+    "name" : "Java",
+    "value": 2,
+    "description": "Java, Sun Microsystems tarafından üretilen ve yazılım uygulamaları geliştirmeye yardımcı yazılımlar bütünüdür."
+  },
+  {
+    "_id" : "5eb2d52dacfc1accde40eaa1",
+    "name" : "PHP",
+    "value": 3,
+    "description": "Hypertext Preprocessor, internet için üretilmiş, sunucu taraflı, çok geniş kullanımlı, genel amaçlı, içerisine HTML gömülebilen betik ve programlama dilidir."
+  },
+  {
+    "_id" : "5eb2d532f1d462e1ff7b2fed",
+    "name" : "Tasarım Şablonları",
+    "value": 4,
+    "description": "Tasarım desenleri, tasarım kalıpları, tasarım örüntüleri veya tasarım şablonları, çok rastlanan, birbirine benzer sorunları çözmek için geliştirilmiş ve işlerliği kanıtlanmış genel çözüm önerileridir."
+  }
+]

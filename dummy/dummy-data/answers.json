@@ -1,0 +1,27 @@
+[
+  {
+    "_id" : "5eb2d6ae77980e944a2ea84b",
+    "text" : "Cevap - 1",
+    "value": 1
+  },
+  {
+    "_id" : "5eb2d6b2c144a3f20b39b72b",
+    "text" : "Cevap - 2",
+    "value": 2
+  },
+  {
+    "_id" : "5eb2d6b6931d9f89a1c218f5",
+    "text" : "Cevap - 3",
+    "value": 3
+  },
+  {
+    "_id" : "5eb2d6baf6f2199a1671d36c",
+    "text" : "Cevap - 4",
+    "value": 4
+  },
+  {
+    "_id" : "5eb2d6bfcf5a768ad20d0d01",
+    "text" : "Cevap - 5",
+    "value": 5
+  }
+]

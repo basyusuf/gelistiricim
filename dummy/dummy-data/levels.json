@@ -1,0 +1,32 @@
+[
+  {
+    "_id" : "5eb2d6ae77980e944a2ea84b",
+    "name" : "Demir",
+    "value": 1,
+    "maxLevelPoint": 300
+  },
+  {
+    "_id" : "5eb2d6b2c144a3f20b39b72b",
+    "name" : "Bronz",
+    "value": 2,
+    "maxLevelPoint": 600
+  },
+  {
+    "_id" : "5eb2d6b6931d9f89a1c218f5",
+    "name" : "Gümüş",
+    "value": 3,
+    "maxLevelPoint": 900
+  },
+  {
+    "_id" : "5eb2d6baf6f2199a1671d36c",
+    "name" : "Elmas",
+    "value": 4,
+    "maxLevelPoint": 1200
+  },
+  {
+    "_id" : "5eb2d6bfcf5a768ad20d0d01",
+    "name" : "Şampiyon",
+    "value": 5,
+    "maxLevelPoint": 1200
+  }
+]

@@ -104,7 +104,6 @@ UserSchema.pre('save',function(next){
     }
     bcrypt.genSalt(10,(err, salt) => {
         if(err) next(err);
-        console.log(this.password);
         bcrypt.hash(this.password, salt,(err, hash)=>{
             if(err) next(err);
             this.password = hash;
