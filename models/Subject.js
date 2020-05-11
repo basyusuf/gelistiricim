@@ -5,6 +5,7 @@ const SubjectSchema = new Schema({
     name:{
         type:String,
         required:true,
+        unique:true
     },
     value:{
         type:Number,

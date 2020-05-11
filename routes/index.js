@@ -8,6 +8,7 @@ const profileImageUpload = require('../middleware/libraries/profileImageUpload')
 const postRouter = require('./postRouter');
 const usersRouter = require('./userRouter');
 const commentRouter = require('./commentRouter');
+const educationRouter = require('./educationRouter');
 //Models
 const User = require('../models/User');
 
@@ -22,6 +23,7 @@ router.put('/resetpassword',resetPassword)
 router.use('/users', usersRouter);
 router.use('/post', postRouter);
 router.use('/comment', commentRouter);
+router.use('/education',educationRouter);
 
 router.post('/send-verify-email/:user_id',(req,res)=>{
     const user_id = req.params.user_id;

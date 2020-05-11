@@ -12,7 +12,7 @@ const searchHelper = (searchKey,query,req) =>{
 const populateHelper=(query,population)=>{
     return query.populate(population);
 }
-const questionSortHelper=(query,req)=>{
+const postSortHelper=(query,req)=>{
     const sortKey = req.query.sortBy;
     if(sortKey==="likes"){
         return query.sort('-likeCount -createdAt');
@@ -50,6 +50,6 @@ const paginationHelper = async (model,query,req)=>{
 module.exports={
     searchHelper,
     populateHelper,
-    questionSortHelper,
+    postSortHelper,
     paginationHelper
 }

@@ -1,4 +1,4 @@
-const {searchHelper,populateHelper,questionSortHelper,paginationHelper} = require('./queryMiddlewareHelpers');
+const {searchHelper,populateHelper,postSortHelper,paginationHelper} = require('./queryMiddlewareHelpers');
 const CustomError = require('../../helper/error/CustomError');
 const postQueryMiddleware = function(model,options){
     return async function (req,res,next) {
@@ -11,7 +11,7 @@ const postQueryMiddleware = function(model,options){
             query = populateHelper(query,options.population);
         }
         //Sort
-        query = questionSortHelper(query,req);
+        query = postSortHelper(query,req);
         //Pagination
         const paginationResult = await paginationHelper(model,query,req);
         query = paginationResult.query;

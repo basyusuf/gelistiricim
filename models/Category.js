@@ -6,10 +6,12 @@ const CategorySchema = new Schema({
     name:{
         type:String,
         required:true,
+        unique:true
     },
     value:{
         type:Number,
-        required: true
+        required: true,
+        unique: true
     }
 });
 

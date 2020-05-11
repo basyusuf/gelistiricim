@@ -1,0 +1,22 @@
+[
+  {
+    "_id" : "5eb2d2b1a9690ea1faf98e01",
+    "name" : "JavaScript - 1",
+    "title": "Sıfırdan her yönüyle JavaScript",
+    "category":"5eb2d2bf9358c28e1c7eff8e",
+    "description": "JQuery öğrenmek istiyorsunuz ama JavaScript bilmediğiniz için çekiniyor musunuz?  İşte bu eğitim serisi tam size göre. JavaScript' in temellerini öğrenerek JQuery Kütüphanesini pekiştire pekiştire uygulayarak öğreniyoruz.\n\nJQuery Dünya'nın en fazla kullanılan JavaScript Frameworklerinden biridir.  DOM üzerinde oldukça kolay işler yapmamızı sağlayan bu Framework ile beraber Web Projelerimiz oldukça etkili hale gelmektedir.",
+    "level": 1,
+    "whatWeWillLearn": "JavaScript Dili ile ilgili bölümümüzde;\n\nJavaScript'in ne olduğuna,\nElement seçim işlemine,\nDeğişken tanımlama işlemine,\nDöngüler,\nKoşullu ifadeler \ngibi daha bir çok temel konuyu ele alıyoruz. Ardından; JavaScript temellerimizi attıktan sonra, JQuery kütüphanesine giriş yapıyoruz. Bu bölümlerde;\n\nJQuery 'nin ne olduğuna,\nNasıl kullanıldığına,\nElement seçim işlemine,\nMetot Kavramına,\nFiltre konusuna\ngibi daha bir çok konuyu ele aldıktan sonra JQuery ile Backend işlemlerine de giriyoruz. Bunun için;\n\nGET Metodu \nPOST metodu \n gibi durmları ele alacağız",
+    "image": "https://www.javascript.com/etc/clientlibs/pluralsight/main/images/js-logo.png"
+  },
+  {
+    "_id" : "5eb2d2b1a9690ea1faf98e02",
+    "name" : "Flutter - 1",
+    "title": "Sıfırdan her yönüyle Flutter",
+    "category":"5eb2d2bf9358c28e1c7eff8e",
+    "description": "Bu kurs ile öğrenmesi oldukça kolay olan Dart dilini en detaylı şekilde öğrenip, Google'ın geliştiricilere ücretsiz olarak sunduğu mobil uygulamala geliştirme SDk'sı olan Flutter'ı tüm ayrıntılarıyla öğreneceksiniz.",
+    "level": 1,
+    "whatWeWillLearn": "Dart Dili ve Temelleri\n\nFlutter Temel Kavramları,\n\nStateless ve Statefull Widgetlar,\n\nNavigation Islemleri, Listeler ve Yardımcı Widgetlar\n\nAnimasyon Islemleri\n\nHttp, Json ve Api Kavramları\n\nLocal Veritabanı için SQFlite Kullanımı\n\nState Management Kavramı\n\nBloc Pattern ve Provider Package Kullanımı\n\nFirebase Oturum Açma İşlemleri\n\nFirestore Veri Tabanı Kullanımı ve Sayfalama Örnekleri\n\nFirestore Kullanımı\n\nFirebase Cloud Message ile Bildirim Gönderme İşlemleri\n\nFirestore Güvenlik İşlemleri\n\nAdmob ile uygulamada reklam birimlerinin kullanılması\n\nUygulamanın markete yüklenilmesi\n\nve daha fazlası yapılan pek çok uygulamayla hem teorik hem de pratik yöntemlerle detaylıca anlatılmıştır.",
+    "image": "https://flutter.dev/assets/flutter-lockup-c13da9c9303e26b8d5fc208d2a1fa20c1ef47eb021ecadf27046dea04c0cebf6.png"
+  }
+]
