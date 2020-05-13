@@ -11,9 +11,11 @@ const indexRouter = require('./routes/index');
 
 const app = express();
 const server = require('http').Server(app);
-const port = config.port || 80;
-server.listen(port);
-console.log("Server listening at port:"+port);
+app.set('port', (config.port || 80));
+server.listen(app.get('port'), err => {
+    if(err) throw err;
+});
+console.log("Server listening at port:"+app.get('port'));
 const io = require('socket.io').listen(server,{path:'/socket/socket.io'});
 app.set('socketio', io);
 io.on('connection', (socket) => {

@@ -21,11 +21,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script>
         $(()=>{
-
+            let local_domain = 'http://localhost';
+            let global_domain = 'https://gelistiricim.herokuapp.com';
             $('#loginButton').click(function(){
                 const user_name = $('#userName').val();
                 console.log(user_name);
-                const socket = io.connect('http://localhost',{path:'/socket/socket.io'});
+                const socket = io.connect(global_domain,{path:'/socket/socket.io'});
                 socket.on('connect', (coming_socket) => {
                     console.log('Sockete aşarıyla bağlanıldı.');
                     $('#loginButton').hide();
