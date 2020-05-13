@@ -3,18 +3,36 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+//config
+const config = require('./config');
+
 const indexRouter = require('./routes/index');
 //All route in indexRouter
 
 const app = express();
+const server = require('http').Server(app);
+const port = config.port || 80;
+server.listen(port);
+console.log("Server listening at port:"+port);
+const io = require('socket.io').listen(server,{path:'/socket/socket.io'});
+app.set('socketio', io);
+io.on('connection', (socket) => {
+    console.log("Kullanıcı Bağlandı");
+    socket.emit('baglandi');
+    socket.on('hazır',()=>{
+        console.log('Selam bro')
+    })
+    socket.on('disconnect',()=>{
+        console.log("Kullanıcı Ayrıldı");
+    })
+});
 
 //DB connection
 const db = require('./helper/db')();
 
 //Middleware
 const customErrorHandler = require('./middleware/customErrorHandler');
-//config
-const config = require('./config');
+
 
 //Swagger API Documentation
 const swaggerDefinition = {

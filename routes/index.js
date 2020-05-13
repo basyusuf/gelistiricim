@@ -10,6 +10,7 @@ const usersRouter = require('./userRouter');
 const commentRouter = require('./commentRouter');
 const educationRouter = require('./educationRouter');
 const questionRouter = require('./questionRouter');
+const socketRouter = require('./socketRouter');
 //Models
 const User = require('../models/User');
 
@@ -26,6 +27,7 @@ router.use('/post', postRouter);
 router.use('/comment', commentRouter);
 router.use('/education',educationRouter);
 router.use('/question',questionRouter);
+router.use('/socket',socketRouter);
 
 router.post('/send-verify-email/:user_id',(req,res)=>{
     const user_id = req.params.user_id;
