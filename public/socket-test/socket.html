@@ -1,12 +1,16 @@
 <!doctype html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/semantic.min.css">
+    <title>Socket IO</title>
     <style>
+        body{
+            text-align: center;
+        }
         .loginStatusTrue{
             color:green;
         }
@@ -18,35 +22,61 @@
             src="https://code.jquery.com/jquery-3.5.1.js"
             integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
             crossorigin="anonymous"></script>
+    <script src="css/semantic.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script>
         $(()=>{
-            let local_domain = 'http://localhost';
-            let global_domain = 'https://gelistiricim.herokuapp.com';
+            let local_domain = 'http://localhost/game';
+            let global_domain = 'http://gelistiricim.herokuapp.com/game';
             $('#loginButton').click(function(){
                 const user_name = $('#userName').val();
                 console.log(user_name);
-                const socket = io.connect(global_domain,{path:'/socket/socket.io'});
+                const socket = io.connect(global_domain);
                 socket.on('connect', (coming_socket) => {
-                    console.log('Sockete aşarıyla bağlanıldı.');
-                    $('#loginButton').hide();
-                    let item = $("#loginStatus");
-                    item.html('Başarıyla bağlanıldı');
-                    item.removeClass('loginStatusFalse');
-                    item.addClass('loginStatusTrue');
-                    socket.emit('hazır');
+                    console.log('Sockete başarıyla bağlanıldı.');
+                    socket.emit('new-user',{name:user_name});
+                    loginTrue();
+                    socket.on('user-list',(data)=>{
+                        $('#userListBody').append(`
+                        <div class="item">
+                            <div class="content">
+                                <a class="header">${data.name}</a>
+                            </div>
+                        </div>`);
+                        $('#onlineCount').html(data.onlineCount);
+                    })
                     socket.on('disconnected',()=>{
-                        item.html="Socket düştü";
-                        item.addClass('loginStatusFalse');
-                        item.removeClass('loginStatusTrue');
+                        loginFalse();
                     })
                 });
             })
+            function loginTrue(){
+                $('#loginButton').hide();
+                let item = $("#loginStatus");
+                item.html('Başarıyla bağlanıldı');
+                item.removeClass('loginStatusFalse');
+                item.addClass('loginStatusTrue');
+            }
+            function loginFalse() {
+                let item = $("#loginStatus");
+                item.html="Socket düştü";
+                item.addClass('loginStatusFalse');
+                item.removeClass('loginStatusTrue');
+            }
         });
     </script>
 </head>
 <body>
     <h1>Login status: <span id="loginStatus" class="loginStatusFalse">Bağlantı yok</span></h1>
-    <div>Kullanıcı adınız:<input id="userName" placeholder="Adınız" /><button id="loginButton">Giriş</button></div>
+    <div>
+        <div class="ui input">
+            <input id="userName" type="text" placeholder="Search...">
+        </div>
+        <button class="ui button" id="loginButton">Giriş</button>
+    </div>
+    <div>Çevirimci kişi sayısı: <span id="onlineCount">0</span></div>
+    <div class="ui middle aligned divided list" id="userListBody">
+
+    </div>
 </body>
 </html>

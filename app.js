@@ -20,13 +20,22 @@ if(config.host == "localhost:80")
     console.log("Server listening at port:"+app.get('port'));
 }
 
-const io = require('socket.io').listen(server,{path:'/socket/socket.io'});
+const io = require('socket.io').listen(server);
 app.set('socketio', io);
-io.on('connection', (socket) => {
-    console.log("Kullanıcı Bağlandı");
-    socket.emit('baglandi');
-    socket.on('hazır',()=>{
-        console.log('Selam bro')
+/*const nsp = io.of('/my-namespace');
+nsp.on('connection',()=>{
+    console.log('nsp geldi');
+})*/
+const gamesocket = io.of('/game');
+gamesocket.on('connection', (socket) => {
+    console.log("Sockete bağlanıldı. Kişi sayısı:"+io.engine.clientsCount);
+    socket.on('new-user',(data)=>{
+        console.log(data.name + ' başarıyla aramıza katıldı.');
+        let count = io.engine.clientsCount;
+        socket.broadcast.emit('user-list',{
+            name:data.name,
+            onlineCount:count
+        });
     })
     socket.on('disconnect',()=>{
         console.log("Kullanıcı Ayrıldı");
