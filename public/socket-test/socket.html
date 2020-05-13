@@ -35,6 +35,11 @@
                     item.removeClass('loginStatusFalse');
                     item.addClass('loginStatusTrue');
                     socket.emit('hazır');
+                    socket.on('disconnected',()=>{
+                        item.html="Socket düştü";
+                        item.addClass('loginStatusFalse');
+                        item.removeClass('loginStatusTrue');
+                    })
                 });
             })
         });

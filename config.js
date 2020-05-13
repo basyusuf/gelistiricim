@@ -6,7 +6,7 @@ module.exports={
     //gelistiricim.herokuapp.com ve ya localhost:3000
     host:GLOBAL_VARIABLE,
     domain:GLOBAL_VARIABLE,
-    port:80,
+    port:PORT,
     smtpSetting:{
         host:"smtp.gmail.com",
         port:587,

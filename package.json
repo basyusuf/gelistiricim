@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "sudo node ./bin/www",
+    "start": "node ./bin/www",
     "start-dev": "sudo nodemon ./bin/www",
     "test": "mocha --exit --recursive",
     "import-dummy": "node ./dummy/dummy-generator.js --import",

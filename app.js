@@ -11,7 +11,7 @@ const indexRouter = require('./routes/index');
 
 const app = express();
 const server = require('http').Server(app);
-app.set('port', (config.port || 80));
+app.set('port', (process.env.PORT || config.port));
 server.listen(app.get('port'), err => {
     if(err) throw err;
 });
