@@ -31,7 +31,6 @@ const getAllQuestion = async (req,res,next) => {
         data:questions,
         message:"Get All Question Successful"
     });
-
 }
 module.exports={
     getAllQuestion

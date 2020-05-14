@@ -136,20 +136,27 @@ const banUser = (req, res, next)=> {
         res.json(err);
     });
 }
-const uploadImage = async (req,res,next)=>{
-    const user = await User.findByIdAndUpdate(req.user.id,{
-        "images":req.savedProfileImage
-    },{
-        new:true,
-        runValidators:true
-    });
-
-    res.status(200).json({
-        success:true,
-        message:"Image upload succesfull",
-        data:user
-    });
-}
+/**
+ * @swagger
+ * /users/delete/{user_id}:
+ *   delete:
+ *     description: Delete user for user id
+ *     tags:
+ *       - Users
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: user_id
+ *         description: User ID.
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: get user
+ *     security:
+ *       - ApiKeyAuth: []
+ */
 const deleteUser = async (req,res,next)=>{
     const {id} = req.params;
     const user = await User.findById(id);
@@ -167,6 +174,5 @@ module.exports={
     updateUserForID,
     createUser,
     banUser,
-    deleteUser,
-    uploadImage
+    deleteUser
 }

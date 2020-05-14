@@ -122,6 +122,25 @@ const logoutUser = async (req,res,next) =>{
             message:"Logout Successfull"
         })
 };
+/**
+ * @swagger
+ * /forgotpassword:
+ *   post:
+ *     description: Forgot password
+ *     tags:
+ *       - Index
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: email
+ *         description: User E-Mail.
+ *         in: formData
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: login
+ */
 const forgotPassword = async (req,res,next)=>{
     const resetEmail = req.body.email;
     const user =await User.findOne({email:resetEmail});
@@ -151,8 +170,31 @@ const forgotPassword = async (req,res,next)=>{
         await user.save();
         return next(new CustomError("Email Could Not Be Sent",500));
     }
-
 }
+/**
+ * @swagger
+ * /resetpassword:
+ *   put:
+ *     description: Reset Password
+ *     tags:
+ *       - Index
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: resetPasswordToken
+ *         description: E-maile gelen reset password token.
+ *         in: query
+ *         required: true
+ *         type: string
+ *       - name: password
+ *         description: Yeni Şifre.
+ *         in: formData
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: login
+ */
 const resetPassword = async (req,res,next)=>{
     const {resetPasswordToken} = req.query;
     const {password} = req.body;

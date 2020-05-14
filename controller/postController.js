@@ -9,6 +9,17 @@ const CustomError = require('../helper/error/CustomError');
  *       - Post
  *     produces:
  *       - application/json
+ *     parameters:
+ *       - name: page
+ *         description: Page Number.
+ *         in: query
+ *         required: false
+ *         type: integer
+ *       - name: limit
+ *         description: Query Post Limit.
+ *         in: query
+ *         required: false
+ *         type: integer
  *     responses:
  *       200:
  *         description: get user
@@ -22,7 +33,7 @@ const getAllPosts = async (req, res, next) =>{
  * @swagger
  * /post:
  *   post:
- *     description: Get user for user id
+ *     description: Create Post
  *     tags:
  *       - Post
  *     produces:
@@ -70,7 +81,7 @@ const createNewPost = (req, res, next)=> {
  * @swagger
  * /post/{post_id}:
  *   get:
- *     description: Get user for user id
+ *     description: Get Post for Post Id
  *     tags:
  *       - Post
  *     produces:
@@ -102,6 +113,32 @@ const getPostForId = (req, res, next)=> {
     });
 };
 
+/**
+ * @swagger
+ * /post/{post_id}:
+ *   put:
+ *     description: Update Post for id
+ *     tags:
+ *       - Post
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: post_id
+ *         description: Post ID.
+ *         in: path
+ *         required: true
+ *         type: string
+ *       - name: content
+ *         description: Content.
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Get Post
+ *     security:
+ *       - ApiKeyAuth: []
+ */
 const updatePostForId = (req, res, next)=> {
     const postID = req.params.post_id;
     const promise = Post.findByIdAndUpdate(
@@ -116,6 +153,60 @@ const updatePostForId = (req, res, next)=> {
         res.json(err);
     });
 }
+/**
+ * @swagger
+ * /post/{post_id}:
+ *   delete:
+ *     description: Delete Post for id
+ *     tags:
+ *       - Post
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: post_id
+ *         description: Post ID.
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Get Post
+ *     security:
+ *       - ApiKeyAuth: []
+ */
+const deletePostForId = (req, res, next)=> {
+    const postID = req.params.post_id;
+    const promise = Post.findOneAndDelete(postID);
+    promise.then((data)=>{
+        res.status(201).json({
+            message:"Post deleted successful",
+            status:true
+        });
+    }).catch((err)=>{
+        res.json(err);
+    });
+}
+/**
+ * @swagger
+ * /post/like/{post_id}:
+ *   get:
+ *     description: Like Post for ID
+ *     tags:
+ *       - Post
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: post_id
+ *         description: Post ID.
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Get Post
+ *     security:
+ *       - ApiKeyAuth: []
+ */
 const likePost = async (req,res,next)=>{
     const postID = req.params.post_id;
     console.log("User Id:"+req.user.id);
@@ -131,6 +222,27 @@ const likePost = async (req,res,next)=>{
         data:post
     })
 }
+/**
+ * @swagger
+ * /post/unlike/{post_id}:
+ *   get:
+ *     description: Unlike Post for ID
+ *     tags:
+ *       - Post
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: post_id
+ *         description: Post ID.
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Get Post
+ *     security:
+ *       - ApiKeyAuth: []
+ */
 const unlikePost = async (req,res,next)=>{
     const postID = req.params.post_id;
     const post =await Post.findById(postID);
@@ -149,6 +261,7 @@ const unlikePost = async (req,res,next)=>{
 module.exports={
     getAllPosts,
     createNewPost,
+    deletePostForId,
     getPostForId,
     updatePostForId,
     likePost,

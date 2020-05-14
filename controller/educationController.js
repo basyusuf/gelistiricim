@@ -28,7 +28,49 @@ const getAllEducation = async (req, res, next)=> {
         }
     );
 };
-
+/**
+ * @swagger
+ * /education/create:
+ *   post:
+ *     description: Create Education
+ *     tags:
+ *       - Education
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: title
+ *         description: Education Title
+ *         in: formData
+ *         required: true
+ *         type: string
+ *       - name: name
+ *         description: Education Name
+ *         in: formData
+ *         required: true
+ *         type: string
+ *       - name: category
+ *         description: Category ID
+ *         in: formData
+ *         required: true
+ *         type: string
+ *         enum: ["5eb2d2b1a9690ea1faf98e06","5eb2d2b9f03aef144b948e24","5eb2d2bf9358c28e1c7eff8e"]
+ *       - name: description
+ *         description: Education Description
+ *         in: formData
+ *         required: true
+ *         type: string
+ *         multiLine: true
+ *       - name: image
+ *         description: Image Url
+ *         in: formData
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Get Post
+ *     security:
+ *       - ApiKeyAuth: []
+ */
 const createNewEducation = (req, res, next)=> {
     const { title,name,category,description,image} = req.body;
     const education = new Education({

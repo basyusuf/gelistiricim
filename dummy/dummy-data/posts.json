@@ -3,60 +3,70 @@
     "_id" : "5e302a02685d0667c54d42ea",
     "title" : "Post 1 - Title",
     "content" : "Post 1 - Content",
-    "author" : "5e30275d141401679e3832a1"
+    "author" : "5e30275d141401679e3832a1",
+    "image_url": "https://i.pinimg.com/originals/b8/3f/fb/b83ffb5a6b74b5ef38c6ce2a640ee956.png"
   },
   {
     "_id" : "5e302a50f4d40cf362859e04",
     "title" : "Post 2 - Title",
     "content" : "Post 2 - Question Content",
-    "author" : "5e2866280427c1ff0dd2b5cb"
+    "author" : "5e2866280427c1ff0dd2b5cb",
+    "image_url": "https://image.freepik.com/free-vector/social-media-post-template-abstract-background_7087-720.jpg"
   },
   {
     "_id" : "5e302a556f38949cf14f01de",
     "title" : "Post 3 - Title",
     "content" : "Post 3 - Question Content",
-    "author" : "5e300f0ffbb6b05ee9037fd2"
+    "author" : "5e300f0ffbb6b05ee9037fd2",
+    "image_url": "https://cdn1.vectorstock.com/i/1000x1000/43/70/social-media-post-template-abstract-background-vector-25124370.jpg"
   },
   {
     "_id" : "5e302a5a97b9c9f7b219002b",
     "title" : "Post 4 - Title",
     "content" : "Post 4 - Question Content",
-    "author" : "5e2effcccbdf585842cdb6ce"
+    "author" : "5e2effcccbdf585842cdb6ce",
+    "image_url": "https://cdn5.vectorstock.com/i/1000x1000/43/64/social-media-post-template-abstract-background-vector-25124364.jpg"
   },
   {
     "_id" : "5e302a619d3b40d1d39908e0",
     "title" : "Post 5 - Title",
     "content" : "Post 5 - Question Content",
-    "author" : "5e302931752a052e11096e96"
+    "author" : "5e302931752a052e11096e96",
+    "image_url": "https://image.freepik.com/free-vector/social-media-post-template-abstract-background_7087-711.jpg"
   },
   {
     "_id" : "5e302a667906fa73c64fca1d",
     "title" : "Post 6 - Title",
     "content" : "Post 6 - Question Content",
-    "author" : "5e30275d141401679e3832a1"
+    "author" : "5e30275d141401679e3832a1",
+    "image_url": "https://png.pngtree.com/png-clipart/20190705/original/pngtree-social-media-post-template-abstract-background-png-image_4276835.jpg"
   },
   {
     "_id" : "5e302a6cfb6e636c379151cf",
     "title" : "Post 7 - Title",
     "content" : "Post 7 - Question Content",
-    "author" : "5e30275d141401679e3832a1"
+    "author" : "5e30275d141401679e3832a1",
+    "image_url": "https://cdn3.vectorstock.com/i/1000x1000/43/62/social-media-post-template-abstract-background-vector-25124362.jpg"
   },
   {
     "_id" : "5e302a78403be1bbdcb039a7",
     "title" : "Post 8 - Title",
     "content" : "Post 8 - Question Content",
-    "author" : "5e30275d141401679e3832a1"
+    "author" : "5e30275d141401679e3832a1",
+    "image_url": "https://image.freepik.com/free-vector/social-media-post-template-abstract-background_7087-720.jpg"
   },
   {
     "_id" : "5e30424f3352757bc81e5cfc",
     "title" : "Post 9 - Title",
     "content" : "Post 9 - Question Content",
-    "author" : "5e30275d141401679e3832a1"
+    "author" : "5e30275d141401679e3832a1",
+    "image_url": "https://cdn1.vectorstock.com/i/1000x1000/43/70/social-media-post-template-abstract-background-vector-25124370.jpg"
   },
   {
     "_id" : "5e302a8075ac8d9e9bd199b9",
     "title" : "Post 10 - Title",
     "content" : "Post 10 - Question Content",
-    "author" : "5e30275d141401679e3832a1"
+    "author" : "5e30275d141401679e3832a1",
+    "image_url": "https://i.pinimg.com/originals/b8/3f/fb/b83ffb5a6b74b5ef38c6ce2a640ee956.png"
   }
 ]

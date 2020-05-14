@@ -11,6 +11,7 @@ const commentRouter = require('./commentRouter');
 const educationRouter = require('./educationRouter');
 const questionRouter = require('./questionRouter');
 const socketRouter = require('./socketRouter');
+const profileRouter = require('./profileRouter');
 //Models
 const User = require('../models/User');
 
@@ -20,7 +21,7 @@ router.post('/register',registerUser );
 router.post('/login',loginUser);
 router.get('/logout',logoutUser);
 router.post('/forgotpassword',forgotPassword);
-router.put('/resetpassword',resetPassword)
+router.put('/resetpassword',resetPassword);
 //ChildRoutes
 router.use('/users', usersRouter);
 router.use('/post', postRouter);
@@ -28,6 +29,7 @@ router.use('/comment', commentRouter);
 router.use('/education',educationRouter);
 router.use('/question',questionRouter);
 router.use('/socket',socketRouter);
+router.use('/profile',profileRouter);
 
 router.post('/send-verify-email/:user_id',(req,res)=>{
     const user_id = req.params.user_id;

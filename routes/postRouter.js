@@ -6,6 +6,7 @@ const Post = require('../models/Post');
 const postQueryMiddleware = require('../middleware/query/postQueryMiddleware');
 const { getAllPosts,
     createNewPost,
+    deletePostForId,
     getPostForId,
     updatePostForId,
     likePost,
@@ -18,9 +19,10 @@ router.get('/',postQueryMiddleware(Post,{
         select:"userName"
     }
 }) ,getAllPosts);
-router.post('/', createNewPost);
+router.post('/',verifyToken, createNewPost);
 router.get('/:post_id', getPostForId);
 router.put('/:post_id',[verifyToken,PostOwnerAccess],updatePostForId);
+router.delete('/:post_id',[verifyToken,PostOwnerAccess],deletePostForId)
 router.get('/like/:post_id',verifyToken, likePost);
 router.get('/unlike/:post_id',verifyToken, unlikePost);
 

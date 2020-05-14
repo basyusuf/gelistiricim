@@ -10,7 +10,7 @@ module.exports={
     smtpSetting:{
         host:"smtp.gmail.com",
         port:587,
-        email:"y.penava@gmail.com",
-        pass:""
+        email:"testgelistiricim@gmail.com",
+        pass:"gelistiricim.123"
     }
 };

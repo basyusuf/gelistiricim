@@ -1,4 +1,5 @@
 const Post = require('../models/Post');
+const CustomError = require('../helper/error/CustomError')
 PostOwnerAccess = async (req,res,next) =>
 {
     const userId = req.user.id;
