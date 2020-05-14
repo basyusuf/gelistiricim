@@ -26,12 +26,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script>
         $(()=>{
-            let local_domain = 'http://localhost:4000/game';
+            let local_domain = 'http://localhost:80/game';
             let global_domain = 'https://gelistiricim.herokuapp.com/game';
             $('#loginButton').click(function(){
                 const user_name = $('#userName').val();
                 console.log(user_name);
-                const socket = io.connect(local_domain);
+                const socket = io.connect(global_domain);
                 socket.on('connect', (coming_socket) => {
                     console.log('Sockete başarıyla bağlanıldı.');
                     socket.emit('new-user',{name:user_name});
