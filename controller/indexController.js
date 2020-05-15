@@ -37,17 +37,23 @@ const welcomeAPI =(req, res, next) => {
  *         in: formData
  *         required: true
  *         type: string
+ *       - name: about
+ *         description: User's about.
+ *         in: formData
+ *         required: false
+ *         type: string
  *     responses:
  *       201:
  *         description: register
  */
 const registerUser = (req, res, next) => {
-    const { userName,password,email} =  req.body;
+    const { userName,password,email,about} =  req.body;
 
     const user = new User({
         userName,
         password:password,
-        email
+        email,
+        about:about
     });
     const promise = user.save();
     promise.then((data)=>{

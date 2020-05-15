@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
     author:{
-        type:String,//mongoose.Schema.ObjectId
+        type:mongoose.Schema.ObjectId,//mongoose.Schema.ObjectId
         required:true,
         ref:"user"
     },
@@ -26,7 +26,7 @@ const PostSchema = new Schema({
     image_url:{
         type:String,
         required:true,
-        default:"https://images.ctfassets.net/00i767ygo3tc/2LX3UftqFzVDBXTuIILQqn/c95a6ff3b1caa44899048f2b834d08fd/how-to-post-a-picture-with-music-instagram-story.png"
+        default:null
     },
     likes:[
         {

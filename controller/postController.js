@@ -39,18 +39,13 @@ const getAllPosts = async (req, res, next) =>{
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: author
- *         description: User ID.
- *         in: formData
- *         required: true
- *         type: string
  *       - name: title
  *         description: Post title.
  *         in: formData
  *         required: true
  *         type: string
- *       - name: message
- *         description: Post message.
+ *       - name: content
+ *         description: Post content.
  *         in: formData
  *         required: true
  *         type: string
@@ -61,11 +56,11 @@ const getAllPosts = async (req, res, next) =>{
  *       - ApiKeyAuth: []
  */
 const createNewPost = (req, res, next)=> {
-    const { title,message} = req.body;
+    const { title,content} = req.body;
     const post = new Post({
         author:req.user.id,
         title:title,
-        message:message
+        content:content
     });
     const promise = post.save();
     promise.then((data)=>{

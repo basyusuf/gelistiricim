@@ -12,8 +12,7 @@ const educationRouter = require('./educationRouter');
 const questionRouter = require('./questionRouter');
 const socketRouter = require('./socketRouter');
 const profileRouter = require('./profileRouter');
-//Models
-const User = require('../models/User');
+const categoryRouter = require('./categoryRouter');
 
 //Index Routes
 router.get('/', welcomeAPI);
@@ -30,16 +29,6 @@ router.use('/education',educationRouter);
 router.use('/question',questionRouter);
 router.use('/socket',socketRouter);
 router.use('/profile',profileRouter);
+router.use('/category',categoryRouter);
 
-router.post('/send-verify-email/:user_id',(req,res)=>{
-    const user_id = req.params.user_id;
-    const user = User.findOne(user_id);
-    const eMail = user.email;
-    //Veriyf işlemi olacak.
-});
-
-router.post('/veriyf-email/:email_token',(req,res)=>{
-    const {email_token} = req.params.email_token;
-    //Veriyf işlemi olacak.
-});
 module.exports = router;

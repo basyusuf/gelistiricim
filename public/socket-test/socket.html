@@ -31,7 +31,7 @@
             $('#loginButton').click(function(){
                 const user_name = $('#userName').val();
                 console.log(user_name);
-                const socket = io.connect(local_domain);
+                const socket = io.connect(global_domain);
                 socket.on('connect', (coming_socket) => {
                     console.log('Sockete başarıyla bağlanıldı.');
                     socket.emit('new-user',{name:user_name});
