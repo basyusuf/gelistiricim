@@ -4,8 +4,11 @@ const CustomError = require('../../helper/error/CustomError');
 
 const storage = multer.diskStorage({
     destination:function (req,file,cb) {
-        //const rootDir = path.dirname(require.main.filename);
-        const rootDir = "/home/penava/Documents/Bitirme/backend-gelistiricim";
+        let rootDir = process.argv[1];
+        rootDir = rootDir.substr(0,rootDir.length-8);
+
+        //const rootDir = "/home/penava/Documents/Bitirme/backend-gelistiricim";
+        console.log(rootDir);
         cb(null,path.join(rootDir,"/public/uploads"));
     },
     filename: function (req,file,cb) {
