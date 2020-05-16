@@ -86,7 +86,7 @@ const publicProfile = async (req,res,next) => {
     if(!user){
         return next(new CustomError("User Not Found",400));
     }
-    let userPosts = await Post.find({author:user._id},{title:1,slug:1,createdAt:1});
+    let userPosts = await Post.find({author:user._id},{title:1,slug:1,createdAt:1,image_url:1});
     let responseData={
         user_data:{
             id:user._id,

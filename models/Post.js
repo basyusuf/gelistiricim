@@ -25,7 +25,7 @@ const PostSchema = new Schema({
     },
     image_url:{
         type:String,
-        default:null
+        default:"https://gelistiricim.herokuapp.com/default_image/post_1.jpeg"
     },
     likes:[
         {

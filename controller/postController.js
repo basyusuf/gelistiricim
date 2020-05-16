@@ -49,6 +49,11 @@ const getAllPosts = async (req, res, next) =>{
  *         in: formData
  *         required: true
  *         type: string
+ *       - name: image_url
+ *         type: string
+ *         description: Post Image.
+ *         in: formData
+ *         required: false
  *     responses:
  *       201:
  *         description: Created Post

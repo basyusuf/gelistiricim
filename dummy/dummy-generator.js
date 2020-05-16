@@ -39,18 +39,20 @@ const importAllData = async function(){
     try {
         await User.create(users);
         console.log("User's Created");
-        const addedStatPost = addingPost(posts,users);
+        const addedStatPost = addingPost(posts,users,5);
         let postResponse = await Post.create(addedStatPost);
         console.log("Post's Created");
-        await Category.create(categories);
+        let categoryResponse = await Category.create(categories);
         console.log("Categories Created");
-        await Subject.create(subjects);
+        let subjectResponse = await Subject.create(subjects);
         console.log("Subject's Created");
-        await Level.create(levels);
+        let levelResponse = await Level.create(levels);
         console.log("Level's Created");
-        await Answer.create(answers);
+        let addedStatAnswers = generateAnswers(answers,6,50);
+        let answerResponse = await Answer.create(addedStatAnswers);
         console.log("Answer's Created");
-        await Question.create(questions);
+        let addedStatQuestion = generateQuestion(questions,2,40,categoryResponse,subjectResponse,levelResponse,answerResponse);
+        await Question.create(addedStatQuestion);
         console.log("Question's Created");
         await Education.create(educations);
         console.log("Education's created");
@@ -86,10 +88,52 @@ const createPageForEducation = (education) =>{
     }
     return responseArray;
 };
+const generateAnswers = (answers,start,end) =>{
+    for(let i = start;i<end;i++){
+        answers.push(
+            {
+                text : "Cevap - "+i,
+                value: i
+            }
+        )
+    }
+    return answers;
+}
+const generateQuestion = (question,start,end,category,subject,level,answers) =>{
+    for(let i = start;i<end;i++){
+        let answersCountArray = [];
+        for(let k = 0;k<5;k++){
+            let randomAnswerId = randomIntFromInterval(0,answers.length-1);
+            if(!answersCountArray.includes(randomAnswerId)){
+                answersCountArray.push(randomAnswerId);
+            }
+        }
+        let answersArray = [];
+        answersCountArray.map((count)=>{
+            answersArray.push(answers[count]);
+        });
+        question.push(
+            {
+                text: `Test ${i} sorusunun cevabı aşağıdakilerden hangisidir?`,
+                value: i,
+                category: category[randomIntFromInterval(0,4)],
+                multiCorrect: false,
+                subjects: [
+                    subject[randomIntFromInterval(0,3)]
+                ],
+                level: level[0],
+                answers: answersArray,
+                correctAnswer: [
+                    answersArray[randomIntFromInterval(0,answersCountArray.length-1)]
+                ]
+            }
+        )
+    }
+    return question;
+}
 const createCommentForPost = (addedStatPost,users) => {
     let responseArray = [];
     let randomUser;
-    console.log(addedStatPost);
     addedStatPost.map((item)=>{
         for(let j=0;j<3;j++){
             randomUser=randomIntFromInterval(0,5);
@@ -102,9 +146,9 @@ const createCommentForPost = (addedStatPost,users) => {
     });
     return responseArray;
 }
-const addingPost = (posts,users) => {
+const addingPost = (posts,users,postCount) => {
     users.map((item)=>{
-        for(let j=0;j<3;j++){
+        for(let j=0;j<postCount;j++){
             let randomImageIndex = randomIntFromInterval(1,10);
             posts.push({
                 title : faker.lorem.sentence(),
