@@ -3,25 +3,28 @@ const Schema = mongoose.Schema;
 
 const CommentSchema = new Schema({
     post:{
-        type:String,
+        type:mongoose.Schema.ObjectId,
         required:true,
-        minLength:[12,'`{PATH}` alanı en kısa `{VALUE}` karakter olmalıdır.'],
-        maxLength:[12,'`{PATH}` alanı en uzun `{VALUE}` karakter olmalıdır.']
+        ref:"post"
     },
     author:{
-        type:String,
+        type:mongoose.Schema.ObjectId,
         required:true,
-        minLength:[12,'`{PATH}` alanı en kısa `{VALUE}` karakter olmalıdır.'],
-        maxLength:[12,'`{PATH}` alanı en uzun `{VALUE}` karakter olmalıdır.']
+        ref:"user"
     },
     message:{
         type:String,
         required:true,
         mingLength:[3,'`{PATH}` alanı en kısa `{VALUE}` karakter olmalıdır.'],
     },
-    likes:{
+    likes:[
+        {
+            type:mongoose.Schema.ObjectId,
+            ref:"user"
+        }
+    ],
+    likeCount:{
         type:Number,
-        required:true,
         default:0
     },
     status:{ //Post silinip silinmeme durumu

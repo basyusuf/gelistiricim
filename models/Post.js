@@ -17,7 +17,7 @@ const PostSchema = new Schema({
     content:{
         type:String,
         required:true,
-        minlength:[24,'`{PATH}` alanı en kısa `{VALUE}` karakter olmalıdır.']
+        minlength:[10,'`{PATH}` alanı en kısa `{VALUE}` karakter olmalıdır.']
     },
     slug:{
         type:String,

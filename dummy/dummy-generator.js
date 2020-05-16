@@ -1,3 +1,5 @@
+const faker = require('faker');
+faker.locale = "tr";
 const User = require("../models/User");
 const Post = require('../models/Post');
 const Category = require('../models/Category');
@@ -7,9 +9,15 @@ const Answer = require('../models/Answer');
 const Question = require('../models/Question');
 const EducationPage = require('../models/EducationPage');
 const Education = require('../models/Education');
+const Comment = require('../models/Comment');
 const fs = require("fs");
 const connectDatabase = require("../helper/db");
 const CustomError = require("../helper/error/CustomError");
+const ImageDomain = "https://gelistiricim.herokuapp.com/default_image/";
+let myDefaultImageArray = [];
+for(let j = 1; j<11; j++){
+    myDefaultImageArray.push(ImageDomain+"post_"+j+".jpeg");
+};
 
 
 const path = "/dummy-data/";
@@ -31,7 +39,8 @@ const importAllData = async function(){
     try {
         await User.create(users);
         console.log("User's Created");
-        await Post.create(posts);
+        const addedStatPost = addingPost(posts,users);
+        let postResponse = await Post.create(addedStatPost);
         console.log("Post's Created");
         await Category.create(categories);
         console.log("Categories Created");
@@ -47,6 +56,8 @@ const importAllData = async function(){
         console.log("Education's created");
         const educationPagesCreated = createPageForEducation(educations);
         await EducationPage.create(educationPagesCreated);
+        const commentsCreated = createCommentForPost(postResponse,users);
+        await Comment.create(commentsCreated);
         console.log("Education Pages Created");
         console.log("********** Import Process Successful **********");
     }
@@ -63,7 +74,7 @@ const createPageForEducation = (education) =>{
     let responseArray = [];
     let pageItem;
     for(let i =0;i<education.length;i++){
-        for(let j=0;j<10;j++){
+        for(let j=0;j<25;j++){
             pageItem = {
                 "education_id": education[i]._id,
                 "title":`${education[i].name} -Title - ${j+1}`,
@@ -74,6 +85,39 @@ const createPageForEducation = (education) =>{
         }
     }
     return responseArray;
+};
+const createCommentForPost = (addedStatPost,users) => {
+    let responseArray = [];
+    let randomUser;
+    console.log(addedStatPost);
+    addedStatPost.map((item)=>{
+        for(let j=0;j<3;j++){
+            randomUser=randomIntFromInterval(0,5);
+            responseArray.push({
+                post:item._id,
+                author:users[randomUser]._id,
+                message:faker.lorem.text()
+            })
+        }
+    });
+    return responseArray;
+}
+const addingPost = (posts,users) => {
+    users.map((item)=>{
+        for(let j=0;j<3;j++){
+            let randomImageIndex = randomIntFromInterval(1,10);
+            posts.push({
+                title : faker.lorem.sentence(),
+                content : faker.lorem.paragraph(),
+                author : item._id,
+                image_url: myDefaultImageArray[randomImageIndex]
+            })
+        }
+    })
+    return posts;
+}
+function randomIntFromInterval(min, max) { // min and max included
+    return Math.floor(Math.random() * (max - min + 1) + min);
 }
 const deleteAllData = async function(){
     try {
@@ -86,6 +130,7 @@ const deleteAllData = async function(){
         await Question.deleteMany();
         await EducationPage.deleteMany();
         await Education.deleteMany();
+        await Comment.deleteMany();
         console.log("Delete Process Successful");
 
     }
