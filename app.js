@@ -26,8 +26,8 @@ app.set('socketio', io);
 nsp.on('connection',()=>{
     console.log('nsp geldi');
 })*/
-const gamesocket = io.of('/game');
-gamesocket.on('connection', (socket) => {
+/*const gamesocket = io.of('/game');*/
+io.on('connection', (socket) => {
     console.log("Sockete bağlanıldı. Kişi sayısı:"+io.engine.clientsCount);
     socket.on('new-user',(data)=>{
         console.log(data.name + ' başarıyla aramıza katıldı.');
@@ -36,12 +36,34 @@ gamesocket.on('connection', (socket) => {
             name:data.name,
             onlineCount:count
         });
+    });
+    socket.on('joinRoom',(data)=>{
+        console.log(Object.keys(socket.rooms));
+        let user_name = data.username;
+        socket.join(data.name,()=>{
+            console.log(data.name + " odası oluşturuldu");
+            io.to(data.name).emit('new join',{count:getOnlineCount(io,data),coming_user:user_name})
+        })
+    })
+    socket.on('leaveRoom',(data)=>{
+        socket.leave(data.name,()=>{
+            io.to(data.name).emit('leavedRoom',{count:getOnlineCount(io,data),user:data.username});
+        });
     })
     socket.on('disconnect',()=>{
         console.log("Kullanıcı Ayrıldı");
     })
 });
-
+const getOnlineCount = (io,data) =>{
+    let roomName = String(data.name);
+    const room = io.sockets.adapter.rooms[roomName];
+    if(room){
+        return room.length;
+    }
+    else{
+        return 0;
+    }
+}
 //DB connection
 const db = require('./helper/db')();
 

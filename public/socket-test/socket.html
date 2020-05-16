@@ -17,6 +17,9 @@
         .loginStatusFalse{
             color: red;
         }
+        #roomLeave{
+            display: none;
+        }
     </style>
     <script
             src="https://code.jquery.com/jquery-3.5.1.js"
@@ -26,29 +29,62 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script>
         $(()=>{
-            let local_domain = 'http://localhost:80/game';
-            let global_domain = 'https://gelistiricim.herokuapp.com/game';
-            $('#loginButton').click(function(){
-                const user_name = $('#userName').val();
-                console.log(user_name);
-                const socket = io.connect(local_domain);
-                socket.on('connect', (coming_socket) => {
-                    console.log('Sockete başarıyla bağlanıldı.');
-                    socket.emit('new-user',{name:user_name});
-                    loginTrue();
-                    socket.on('user-list',(data)=>{
-                        $('#userListBody').append(`
+            let local_domain = 'http://localhost:80';
+            let global_domain = 'https://gelistiricim.herokuapp.com';
+            let username_global;
+            let room;
+            const socket = io.connect(global_domain,{
+                reconnectionAttempts:4,
+                reconnectionDelay:1000
+            });
+            socket.on('reconnect_attempt',()=>{
+                console.log('Yeniden Bağlanılmaya Çalışıyor')
+            })
+            socket.on('connect', (coming_socket) => {
+                console.log('Sockete Bağlanıldı');
+                socket.on('disconnected',()=>{
+                    loginFalse();
+                })
+            });
+            socket.on('user-list',(data)=>{
+                $('#userListBody').append(`
                         <div class="item">
                             <div class="content">
                                 <a class="header">${data.name}</a>
                             </div>
                         </div>`);
-                        $('#onlineCount').html(data.onlineCount);
-                    })
-                    socket.on('disconnected',()=>{
-                        loginFalse();
-                    })
+                $('#onlineCount').html(data.onlineCount);
+            })
+            $('#loginButton').click(function(){
+                const user_name = $('#userName').val();
+                console.log(user_name);
+                    socket.emit('new-user',{name:user_name});
+                    username_global = user_name;
+                    loginTrue();
                 });
+            $('#roomLogin').click(function () {
+                const room_name = $('#roomName').val();
+                socket.emit('joinRoom',{name:room_name,username:username_global});
+                room = room_name;
+                $('#roomLogin').hide();
+                $('#roomName').hide();
+                $('#roomLeave').show();
+            })
+            $('#roomLeave').click(function () {
+                socket.emit('leaveRoom',{name:room,username:username_global});
+                $('#roomLogin').show();
+                $('#roomName').show();
+                $('#roomLeave').hide();
+                $('#roomLogs').html('');
+                $('#socketRoomCount').html('');
+            });
+            socket.on('new join',(data)=>{
+                $('#roomLogs').append('<div>Odaya' + data.coming_user+' katıldı.</div>');
+                $('#socketRoomCount').html(`<div>Bu odada ${data.count} kişi online.</div>`)
+            });
+            socket.on('leavedRoom',(data)=>{
+                $('#roomLogs').append('<div>Odadan' + data.user+' ayrıldı.</div>');
+                $('#socketRoomCount').html(`<div>Bu odada ${data.count} kişi online.</div>`)
             })
             function loginTrue(){
                 $('#loginButton').hide();
@@ -76,6 +112,17 @@
     </div>
     <div>Çevirimci kişi sayısı: <span id="onlineCount">0</span></div>
     <div class="ui middle aligned divided list" id="userListBody">
+    </div>
+    <div>
+        <input id="roomName" placeholder="Oda adı" />
+        <button class="ui button" id="roomLogin">
+            Odaya gir
+        </button>
+        <button class="ui button" id="roomLeave">
+            Odadan Ayrıl
+        </button>
+        <div id="socketRoomCount"></div>
+        <div id="roomLogs"></div>
 
     </div>
 </body>
