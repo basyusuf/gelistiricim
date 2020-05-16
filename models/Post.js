@@ -11,13 +11,13 @@ const PostSchema = new Schema({
         type:String,
         required:true,
         unique:true,
-        minLength:[6,'`{PATH}` alanı en kısa `{VALUE}` karakter olmalıdır.'],
-        maxLength: [120,'`{PATH}` alanı en kısa `{VALUE}` karakter olmalıdır.']
+        minlength:[6,'`{PATH}` alanı en kısa `{VALUE}` karakter olmalıdır.'],
+        maxlength: [120,'`{PATH}` alanı en kısa `{VALUE}` karakter olmalıdır.']
     },
     content:{
         type:String,
         required:true,
-        mingLength:[24,'`{PATH}` alanı en kısa `{VALUE}` karakter olmalıdır.'],
+        minlength:[24,'`{PATH}` alanı en kısa `{VALUE}` karakter olmalıdır.']
     },
     slug:{
         type:String,
@@ -25,7 +25,6 @@ const PostSchema = new Schema({
     },
     image_url:{
         type:String,
-        required:true,
         default:null
     },
     likes:[
@@ -49,7 +48,6 @@ const PostSchema = new Schema({
     },
     status:{ //Post silinip silinmeme durumu
         type:Boolean,
-        required:true,
         default:true
     }
 });
