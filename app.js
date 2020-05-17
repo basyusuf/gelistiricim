@@ -28,30 +28,43 @@ nsp.on('connection',()=>{
 })*/
 /*const gamesocket = io.of('/game');*/
 io.on('connection', (socket) => {
-    console.log("Sockete bağlanıldı. Kişi sayısı:"+io.engine.clientsCount);
-    socket.on('new-user',(data)=>{
-        console.log(data.name + ' başarıyla aramıza katıldı.');
-        let count = io.engine.clientsCount;
-        socket.broadcast.emit('user-list',{
-            name:data.name,
-            onlineCount:count
-        });
+    socket.on('login user',(data)=>{
+        console.log("Sockete "+data.name +" giriş yaptı");
     });
+    console.log("Sockete bağlanıldı. Kişi sayısı:"+io.engine.clientsCount);
+    io.emit('socket-online',{onlineCount:io.engine.clientsCount});
     socket.on('joinRoom',(data)=>{
-        console.log(Object.keys(socket.rooms));
         let user_name = data.username;
         socket.join(data.name,()=>{
             console.log(data.name + " odası oluşturuldu");
-            io.to(data.name).emit('new join',{count:getOnlineCount(io,data),coming_user:user_name})
+            io.to(data.name).emit('new join',{count:getOnlineCount(io,data),coming_user:user_name,room_name:data.name});
+            let options = {
+                start_game:""
+            };
+            if(getOnlineCount(io,data)>3){
+                options.start_game = true;
+                io.to(data.name).emit('start game',options);
+                console.log('start game ready');
+            }
+            else{
+                options.start_game = false;
+                io.to(data.name).emit('start game',options);
+                console.log('start game not ready');
+            }
         })
     })
+    socket.on('send message',(data)=>{
+        console.log(data);
+        io.emit('coming message',data);
+    });
     socket.on('leaveRoom',(data)=>{
         socket.leave(data.name,()=>{
             io.to(data.name).emit('leavedRoom',{count:getOnlineCount(io,data),user:data.username});
         });
     })
-    socket.on('disconnect',()=>{
-        console.log("Kullanıcı Ayrıldı");
+    socket.on('disconnect',(data)=>{
+        console.log("Kullanıcı ayrıldı");
+        io.emit('socket-online',{onlineCount:io.engine.clientsCount});
     })
 });
 const getOnlineCount = (io,data) =>{

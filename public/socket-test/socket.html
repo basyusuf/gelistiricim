@@ -10,6 +10,7 @@
     <style>
         body{
             text-align: center;
+            height: 100vh;
         }
         .loginStatusTrue{
             color:green;
@@ -18,6 +19,45 @@
             color: red;
         }
         #roomLeave{
+            display: none;
+        }
+        #start_game{
+            display: none;
+        }
+        #loginWelcome{
+            display: none;
+            font-size: 20px;
+        }
+        #room{
+            display: none;
+        }
+        .container{
+            margin-left: 2rem;
+            margin-right: 2rem;
+            margin-top: 2rem;
+        }
+        .socketRoomCountParent{
+            display: none;
+        }
+        .logText{
+            font-size: 16px;
+        }
+        .roomBody{
+            height: 60vh;
+        }
+        #messagesList{
+            margin-top: 1rem;
+            height: 20vh;
+            border: 1px solid #bfbfbf;
+            border-radius: 2px;
+            text-align: left;
+            overflow-x: auto;
+            padding:5px 10px;
+        }
+        #messagesParent{
+            display: none;
+        }
+        #RoomDescName{
             display: none;
         }
     </style>
@@ -33,7 +73,7 @@
             let global_domain = 'https://gelistiricim.herokuapp.com';
             let username_global;
             let room;
-            const socket = io.connect(global_domain,{
+            const socket = io.connect(local_domain,{
                 reconnectionAttempts:4,
                 reconnectionDelay:1000
             });
@@ -46,28 +86,53 @@
                     loginFalse();
                 })
             });
-            socket.on('user-list',(data)=>{
-                $('#userListBody').append(`
-                        <div class="item">
-                            <div class="content">
-                                <a class="header">${data.name}</a>
-                            </div>
-                        </div>`);
+            socket.on('start game',(data)=>{
+                if(data.start_game){
+                    $('#start_game').show();
+                }
+                else{
+                    $('#start_game').hide();
+                }
+            })
+            socket.on('socket-online',(data)=>{
                 $('#onlineCount').html(data.onlineCount);
+            });
+            socket.on('coming message',(data)=>{
+                $('#messagesList').append(CreateMessage(data.user,data.message));
+                $("#messagesList").animate({ scrollTop: $(document).height() }, 1000);
             })
             $('#loginButton').click(function(){
                 const user_name = $('#userName').val();
                 console.log(user_name);
-                    socket.emit('new-user',{name:user_name});
+                socket.emit('login user',{name:user_name});
                     username_global = user_name;
                     loginTrue();
                 });
+            $('#sendMessageButton').click(function () {
+                let message = $('#messageValue').val();
+                if(message){
+                    socket.emit('send message',{user:username_global,message:message});
+                    $('#messageValue').val('');
+                }
+            })
+            $('#messageValue').on('keypress', function (e) {
+                if(e.which === 13){
+                    let message = $('#messageValue').val();
+                    if(message){
+                        socket.emit('send message',{user:username_global,message:message});
+                        $('#messageValue').val('');
+                    }
+                }
+            });
             $('#roomLogin').click(function () {
-                const room_name = $('#roomName').val();
+                let room_name = $('#roomName').val();
                 socket.emit('joinRoom',{name:room_name,username:username_global});
                 room = room_name;
                 $('#roomLogin').hide();
+                $('.socketRoomCountParent').show();
+                $('#messagesParent').show();
                 $('#roomName').hide();
+                $('#RoomDescName').show();
                 $('#roomLeave').show();
             })
             $('#roomLeave').click(function () {
@@ -76,54 +141,132 @@
                 $('#roomName').show();
                 $('#roomLeave').hide();
                 $('#roomLogs').html('');
+                $('#messagesParent').hide();
                 $('#socketRoomCount').html('');
+                $('#RoomDescName').hide();
+                $('.socketRoomCountParent').hide();
+                $('#start_game').hide();
             });
             socket.on('new join',(data)=>{
-                $('#roomLogs').append('<div>Odaya' + data.coming_user+' katıldı.</div>');
-                $('#socketRoomCount').html(`<div>Bu odada ${data.count} kişi online.</div>`)
+                $('#roomLogs').append('<div class="logText"><i class="sign-in green icon"></i> Odaya' + data.coming_user+' katıldı.</div>');
+                $('#roomNameResponse').html(data.room_name);
+                $('#socketRoomCount').html(`${data.count}`);
             });
             socket.on('leavedRoom',(data)=>{
-                $('#roomLogs').append('<div>Odadan' + data.user+' ayrıldı.</div>');
+                $('#roomLogs').append('<div class="logText"><i class="sign-out red icon"></i> Odadan' + data.user+' ayrıldı.</div>');
                 $('#socketRoomCount').html(`<div>Bu odada ${data.count} kişi online.</div>`)
             })
             function loginTrue(){
-                $('#loginButton').hide();
+                $('#loginInputs').hide();
                 let item = $("#loginStatus");
+                $('#room').show();
                 item.html('Başarıyla bağlanıldı');
                 item.removeClass('loginStatusFalse');
                 item.addClass('loginStatusTrue');
+                $('#loginWelcome').show().html("Hoşgeldin "+ username_global)
             }
             function loginFalse() {
                 let item = $("#loginStatus");
+                $('#loginInputs').show();
+                $('#loginWelcome').hide();
                 item.html="Socket düştü";
                 item.addClass('loginStatusFalse');
                 item.removeClass('loginStatusTrue');
+            }
+            /**
+             * @return {string}
+             */
+            function CreateMessage(user,text){
+                return(
+                    `
+                     <div>
+                     <span style="font-weight: bold">
+                     ${user}:
+                    </span>
+                    <span>${text}</span>
+                    </div>
+                    `
+                )
             }
         });
     </script>
 </head>
 <body>
-    <h1>Login status: <span id="loginStatus" class="loginStatusFalse">Bağlantı yok</span></h1>
-    <div>
+<div class="container">
+    <div class="ui message">
+        <div class="header">
+            Login status: <span id="loginStatus" class="loginStatusFalse">Giriş yapılmadı</span>
+        </div>
+        <p id="loginWelcome"></p>
+    </div>
+
+    <div id="loginInputs">
         <div class="ui input">
-            <input id="userName" type="text" placeholder="Search...">
+            <input id="userName" type="text" placeholder="Adın">
         </div>
         <button class="ui button" id="loginButton">Giriş</button>
     </div>
-    <div>Çevirimci kişi sayısı: <span id="onlineCount">0</span></div>
-    <div class="ui middle aligned divided list" id="userListBody">
+    <div class="ui grid">
+        <div class="five wide column">
+            <div><h2>Oda İşlemleri</h2></div>
+            <div id="roomLogs"></div>
+        </div>
+        <div class="six wide column roomBody">
+            <div>
+                <div id="room">
+                    <div class="ui input">
+                        <input id="roomName" placeholder="Oda adı" />
+                    </div>
+                    <button class="ui button" id="roomLogin">
+                        Odaya gir
+                    </button>
+                    <div id="RoomDescName"><h1>Oda Adı:<span id="roomNameResponse"></span></h1></div>
+                    <button class="ui button" id="roomLeave">
+                        Odadan Ayrıl
+                    </button>
+                    <div>
+                        <button class="ui yellow button" id="start_game">
+                            Hazır
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="five wide column">
+            <h2>Durum</h2>
+            <div class="ui statistic">
+                <div class="label">
+                    Sunucuya bağlı olan kullanıcı sayısı
+                </div>
+                <div class="value">
+                    <span id="onlineCount">0</span>
+                </div>
+            </div>
+            <div class="socketRoomCountParent">
+            <div class="ui statistic">
+                <div class="label">
+                    Odaya bağlı olan kullanıcı sayısı
+                </div>
+                <div class="value">
+                    <div id="socketRoomCount"></div>
+                </div>
+            </div>
+            </div>
+        </div>
     </div>
-    <div>
-        <input id="roomName" placeholder="Oda adı" />
-        <button class="ui button" id="roomLogin">
-            Odaya gir
-        </button>
-        <button class="ui button" id="roomLeave">
-            Odadan Ayrıl
-        </button>
-        <div id="socketRoomCount"></div>
-        <div id="roomLogs"></div>
+    <div id="messagesParent">
+    <div id="messagesList">
 
     </div>
+    <div>
+        <div class="ui icon fluid input">
+            <input id="messageValue" type="text" placeholder="Mesaj...">
+            <i class="location arrow link icon" id="sendMessageButton"></i>
+        </div>
+    </div>
+    </div>
+
+
+</div>
 </body>
 </html>
