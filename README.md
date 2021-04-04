@@ -1,4 +1,12 @@
 # Geliştiricim Restfull API
-[![Build status](https://api.travis-ci.org/basyusuf/backend-gelistiricim.svg?branch=master&status=started)](https://travis-ci.org/github/basyusuf/backend-gelistiricim)
-### [API Test Server](https://gelistiricim.herokuapp.com)
+
 ##### Geliştiricilerin toplanacağı sosyal platformun açık kaynak kodu
+
+Kullanıcıların birbirlerini takip edebildiği, blog yazısı oluşturup beğeni atabildiği ve kendi aralarında yarışıp level alabildikleri bir yazılım geliştirici platformudur
+
+### Tech
+
+- Express
+- Mongo
+- Socket.io
+- Swagger
