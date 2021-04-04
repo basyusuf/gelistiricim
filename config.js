@@ -1,16 +1,16 @@
 const PORT = 80;
-const LOCAL_VARIABLE="localhost:"+PORT;
-const GLOBAL_VARIABLE="gelistiricim.herokuapp.com";
-module.exports={
-    api_secret_key:'gelistiricimSECRETKEY2020!',
-    //gelistiricim.herokuapp.com ve ya localhost:3000
-    host:GLOBAL_VARIABLE,
-    domain:GLOBAL_VARIABLE,
-    port:PORT,
-    smtpSetting:{
-        host:"smtp.gmail.com",
-        port:587,
-        email:"testgelistiricim@gmail.com",
-        pass:"gelistiricim.123"
-    }
+const LOCAL_VARIABLE = "localhost:" + PORT;
+const GLOBAL_VARIABLE = "gelistiricim.herokuapp.com";
+module.exports = {
+  api_secret_key: "gelistiricimSECRETKEY2020!",
+  //gelistiricim.herokuapp.com ve ya localhost:3000
+  host: GLOBAL_VARIABLE,
+  domain: GLOBAL_VARIABLE,
+  port: PORT,
+  smtpSetting: {
+    host: "smtp.gmail.com",
+    port: 587,
+    email: "******@gmail.com",
+    pass: "******",
+  },
 };
